@@ -2,6 +2,7 @@ const Clients = require('../models/clients.model');
 const Section = require('../models/sections.model');
 const Services = require('../models/services.model')
 const Representative = require('../models/representative.model');
+const { Op } = require('sequelize');
 
 class ReportService {
     static async getReportGeneral(school_id) {
@@ -31,9 +32,10 @@ class ReportService {
         try {
             const result = await Clients.findAll({
                 where: { schoolId: school_id, 
-                         sectionId:[1,2,3,4,5,6,7] },
+                         sectionId:[1,2,3,4,5,6,7],
                          totalBreakfast: { [Op.lte]: 5 },
                          totalLunch: { [Op.lte]: 5 },
+                        },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',

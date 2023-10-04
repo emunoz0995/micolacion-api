@@ -64,6 +64,18 @@ const revertLunch = async (req, res) => {
     }
 }
 
+const renewService = async (req, res) => {
+    try {
+        const ci = req.params.client_ci;
+        const data = req.body
+        console.log(ci, data)
+        const result = await RefrigeriosProcessService.renewService(ci,data);
+        res.status(200).json({message: 'service renew successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 
 module.exports = {
     decrementBreakFast,
@@ -71,5 +83,6 @@ module.exports = {
     revertBreakFast,
     decrementLunch,
     incrementLunch,
-    revertLunch
+    revertLunch,
+    renewService
 }

@@ -78,5 +78,19 @@ class RefrigeriosProcessService{
             throw error;
         }
     }
+
+    static async renewService(ci,data) {
+        const {totalBreakfast, totalLunch} = data;
+        try {
+            const result = await Clients.findOne({ where: { cedulaCliente: ci } });
+            if (result) {
+                result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
+            }
+            console.log(result)
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 module.exports = RefrigeriosProcessService;
