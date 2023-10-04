@@ -4,7 +4,7 @@ const { getReportGeneral,getReportMenorFive, getReportBreakFast, getReportLunche
 const router = Router();
 
 router.get('/generalReport/:school_id', getReportGeneral);
-router.get('/menorFiveReport', getReportMenorFive);
+router.get('/menorFiveReport/:school_id', getReportMenorFive);
 router.get('/reportBreakFast', getReportBreakFast);
 router.get('/reportLunches', getReportLunches);
 router.get('/reportHistorical', getReportHistorical);
