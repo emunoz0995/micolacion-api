@@ -4,8 +4,8 @@ const Client = require('./clients.model');
 const Representative = require('./representative.model');
 const Services = require('./services.model');
 const Schools = require('./schools.model');
-const Pruebas = require('./pruebas.model');
 const Section = require('./sections.model');
+const History = require('./historical.model'); 
 
 
 const initModels = () => {
@@ -22,9 +22,14 @@ const initModels = () => {
   Client.belongsTo(Schools,{ as: "cliente_colegio", foreignKey: "codigo_colegio"});
   Schools.hasMany(Client, { as: "colegio_cliente", foreignKey: "codigo_colegio"}); 
 
-  Pruebas
-
-
+  History.belongsTo(Section,{ as: "history_seccion", foreignKey: "codigo_seccion"});
+  Section.hasMany(History, { as: "seccion_history", foreignKey: "codigo_seccion"}); 
+  History.belongsTo(Representative,{ as: "history_representante", foreignKey: "codigo_representante"});
+  Representative.hasMany(History, { as: "representante_history", foreignKey: "codigo_representante"}); 
+  History.belongsTo(Services,{ as: "history_servicio", foreignKey: "codigo_servicio"});
+  Services.hasMany(History, { as: "servicio_history", foreignKey: "codigo_servicio"}); 
+  History.belongsTo(Schools,{ as: "history_colegio", foreignKey: "codigo_colegio"});
+  Schools.hasMany(History, { as: "colegio_history", foreignKey: "codigo_colegio"}); 
 
 };
 

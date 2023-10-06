@@ -32,6 +32,14 @@ class ClientService {
                 include: [{
                     model: Representative,
                     as: 'cliente_representante',
+                },{
+                    model: Section,
+                    as: 'cliente_seccion',
+                    attributes: ['name'],
+                }, {
+                    model: Services,
+                    as: 'cliente_servicio',
+                    attributes: ['name'],
                 }]
             });
             console.log(result)

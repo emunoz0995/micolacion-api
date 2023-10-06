@@ -33,8 +33,10 @@ class ReportService {
             const result = await Clients.findAll({
                 where: { schoolId: school_id, 
                          sectionId:[1,2,3,4,5,6,7],
-                         totalBreakfast: { [Op.lte]: 5 },
-                         totalLunch: { [Op.lte]: 5 },
+                         [Op.or]:{
+                            totalBreakfast: { [Op.lte]: 5 },
+                            totalLunch: { [Op.lte]: 5 },
+                         }          
                         },
                 include: [{
                     model: Section,
@@ -58,7 +60,10 @@ class ReportService {
     static async getReportBreakFast(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, sectionId:[1,2,3,4,5,6,7] },
+                where: { schoolId: school_id, 
+                         sectionId:[1,2,3,4,5,6,7],
+                         statusBreakfast: true
+                        },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -81,7 +86,10 @@ class ReportService {
     static async getReportLunches(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, sectionId:[1,2,3,4,5,6,7] },
+                where: { schoolId: school_id, 
+                         sectionId:[1,2,3,4,5,6,7],
+                         statusLunch: true
+                        },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',

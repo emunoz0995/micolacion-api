@@ -1,11 +1,14 @@
 const Clients = require('../models/clients.model');
 
 class RefrigeriosProcessService{
+
+    //breakfast
     static async decrementBreakFast(ci) {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 result.decrement('totalBreakfast', { by: 1 });
+                result.increment('breakfastConsumed', { by: 1 });
                 result.update({ statusBreakfast: true })
             }
             return result;
@@ -40,11 +43,25 @@ class RefrigeriosProcessService{
         }
     }
 
+    static async payBreakFast(ci) {
+        try {
+            const result = await Clients.findOne({ where: { cedulaCliente: ci } });
+            if (result) {
+                result.update({ statusBreakfast: false })
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //Lunch
     static async decrementLunch(ci) {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 result.decrement('totalLunch', { by: 1 });
+                result.increment('lunchesConsumed', { by: 1 });
                 result.update({ statusLunch: true })
             }
             return result;
@@ -79,6 +96,7 @@ class RefrigeriosProcessService{
         }
     }
 
+    //Services
     static async renewService(ci,data) {
         const {totalBreakfast, totalLunch} = data;
         try {
