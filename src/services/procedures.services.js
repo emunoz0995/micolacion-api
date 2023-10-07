@@ -1,4 +1,5 @@
 const Clients = require('../models/clients.model');
+const History = require('../models/historical.model');
 
 class RefrigeriosProcessService{
 
@@ -43,17 +44,6 @@ class RefrigeriosProcessService{
         }
     }
 
-    static async payBreakFast(ci) {
-        try {
-            const result = await Clients.findOne({ where: { cedulaCliente: ci } });
-            if (result) {
-                result.update({ statusBreakfast: false })
-            }
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
 
     //Lunch
     static async decrementLunch(ci) {
@@ -97,6 +87,32 @@ class RefrigeriosProcessService{
     }
 
     //Services
+
+    static async registerExtra(data) {
+        const {cedulaCliente, serviceId} = data;
+        try {
+            const result = await Clients.findOne({ where: { cedulaCliente } });
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId, schoolId } = result.dataValues;
+                const extrasConsumed = 1;
+                await History.create({
+                    cedulaCliente,
+                    firstName, lastName,
+                    sectionId,
+                    representativeId,
+                    schoolId,
+                    serviceId,
+                    extrasConsumed,
+                    }
+                );
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     static async renewService(ci,data) {
         const {totalBreakfast, totalLunch} = data;
         try {
@@ -105,6 +121,18 @@ class RefrigeriosProcessService{
                 result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
             }
             console.log(result)
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async paidService(id) {
+        try {
+            const result = await History.findOne({ where: { id } });
+            if (result) {
+                result.update({ paidService: true })
+            }
             return result;
         } catch (error) {
             throw error;

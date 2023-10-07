@@ -33,16 +33,6 @@ const revertBreakFast = async (req, res) => {
     }
 }
 
-const payBreakFast = async (req, res) => {
-    try {
-        const ci = req.params.client_ci;
-        const result = await RefrigeriosProcessService.payBreakFast(ci);
-        res.status(200).json({message: 'breakfast paid successfully'});
-    } catch (error) {
-        res.status(400).json(error.message);
-    }
-}
-
 const decrementLunch = async (req, res) => {
     try {
         const ci = req.params.client_ci;
@@ -72,7 +62,18 @@ const revertLunch = async (req, res) => {
     } catch (error) {
         res.status(400).json(error.message);
     }
+} 
+
+const registerExtra = async (req, res) => {
+    try {
+        const data = req.body;
+        const result = await RefrigeriosProcessService.registerExtra(data);
+        res.status(200).json({message: 'extra register successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 }
+
 
 const renewService = async (req, res) => {
     try {
@@ -85,14 +86,26 @@ const renewService = async (req, res) => {
     }
 }
 
+const paidService = async (req, res) => {
+    try {
+        const id = req.params.client_id;
+        const result = await RefrigeriosProcessService.paidService(id);
+        res.status(200).json({message: 'service paid successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
+
 
 module.exports = {
     decrementBreakFast,
     incrementBreakFast,
     revertBreakFast,
-    payBreakFast,
+    paidService,
     decrementLunch,
     incrementLunch,
     revertLunch,
+    registerExtra,
     renewService
 }
