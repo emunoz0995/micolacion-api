@@ -2,6 +2,7 @@ const History = require('../models/historical.model');
 const Section = require('../models/sections.model');
 const Services = require('../models/services.model')
 const Representative = require('../models/representative.model');
+const XML = require ('../models/generateXML.model');
 const { Op } = require('sequelize');
 
 class FacturationService {
@@ -33,29 +34,24 @@ class FacturationService {
 
     static async getServicesGenerateXML(school_id) {
         try {
-            const result = await History.findAll({
-                where: { schoolId: school_id, 
-                         sectionId:[1,2,3,4,5,6,7],
-                         [Op.or]:{
-                            totalBreakfast: { [Op.lte]: 5 },
-                            totalLunch: { [Op.lte]: 5 },
-                         }          
-                        },
+            const result = await XML.findAll({
+                where: { schoolId: school_id, isGenerateXML: false},
                 include: [{
                     model: Section,
-                    as: 'cliente_seccion',
+                    as: 'XML_seccion',
                     attributes: ['name'],
                 }, {
                     model: Services,
-                    as: 'cliente_servicio',
-                    attributes: ['name','price'],
+                    as: 'XML_servicio',
+                    attributes: {
+                        exclude: ['createdAt','updatedAt'],
+                    }
+                        
                 },{
                     model: Representative,
-                    as: 'cliente_representante',
+                    as: 'XML_representante',
                 }]
             });
-
-            console.log(result)
             return result;
         } catch (error) {
             console.log(error)

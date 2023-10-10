@@ -6,6 +6,7 @@ const Services = require('./services.model');
 const Schools = require('./schools.model');
 const Section = require('./sections.model');
 const History = require('./historical.model'); 
+const XML = require('./generateXML.model');
 
 
 const initModels = () => {
@@ -29,7 +30,16 @@ const initModels = () => {
   History.belongsTo(Services,{ as: "history_servicio", foreignKey: "codigo_servicio"});
   Services.hasMany(History, { as: "servicio_history", foreignKey: "codigo_servicio"}); 
   History.belongsTo(Schools,{ as: "history_colegio", foreignKey: "codigo_colegio"});
-  Schools.hasMany(History, { as: "colegio_history", foreignKey: "codigo_colegio"}); 
+  Schools.hasMany(History, { as: "colegio_history", foreignKey: "codigo_colegio"});
+  
+  XML.belongsTo(Section,{ as: "XML_seccion", foreignKey: "codigo_seccion"});
+  Section.hasMany(XML, { as: "seccion_XML", foreignKey: "codigo_seccion"}); 
+  XML.belongsTo(Representative,{ as: "XML_representante", foreignKey: "codigo_representante"});
+  Representative.hasMany(XML, { as: "representante_XML", foreignKey: "codigo_representante"}); 
+  XML.belongsTo(Services,{ as: "XML_servicio", foreignKey: "codigo_servicio"});
+  Services.hasMany(XML, { as: "servicio_XML", foreignKey: "codigo_servicio"}); 
+  XML.belongsTo(Schools,{ as: "XML_colegio", foreignKey: "codigo_colegio"});
+  Schools.hasMany(XML, { as: "colegio_XML", foreignKey: "codigo_colegio"});
 
 };
 

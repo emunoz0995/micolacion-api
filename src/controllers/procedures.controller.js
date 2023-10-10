@@ -12,12 +12,12 @@ const decrementBreakFast = async (req, res, next) => {
         res.status(400).json(error.message);
     }
 }
-const incrementBreakFast = async (req, res) => {
+const incrementBreakFast = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.incrementBreakFast(ci);
-        console.log(result)
         res.status(200).json({message: 'breakfast delivered successfully'});
+        next();
     } catch (error) {
         res.status(400).json(error.message);
     }
@@ -43,12 +43,13 @@ const decrementLunch = async (req, res) => {
         res.status(400).json(error.message);
     }
 }
-const incrementLunch = async (req, res) => {
+const incrementLunch = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.incrementLunch(ci);
         console.log(result)
         res.status(200).json({message: 'Lunch delivered successfully'});
+        next();
     } catch (error) {
         res.status(400).json(error.message);
     }
@@ -75,22 +76,28 @@ const registerExtra = async (req, res) => {
 }
 
 
-const renewService = async (req, res) => {
+const renewService = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const data = req.body
         const result = await RefrigeriosProcessService.renewService(ci,data);
         res.status(200).json({message: 'service renew successfully'});
+        setTimeout(() => {
+            next();
+        }, 1000); 
     } catch (error) {
         res.status(400).json(error.message);
     }
 }
 
-const paidService = async (req, res) => {
+const paidService = async (req, res, next) => {
     try {
         const id = req.params.client_id;
         const result = await RefrigeriosProcessService.paidService(id);
         res.status(200).json({message: 'service paid successfully'});
+        setTimeout(() => {
+            next();
+        }, 1000); 
     } catch (error) {
         res.status(400).json(error.message);
     }

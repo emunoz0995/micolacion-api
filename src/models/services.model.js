@@ -18,7 +18,7 @@ const Services = db.define('services', {
         allowNull: false,
     },
     price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(4,2),
         defaultValue: 0,
     },
     isLcv: {

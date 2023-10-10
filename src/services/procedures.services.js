@@ -37,6 +37,14 @@ class RefrigeriosProcessService{
                 result.increment('totalBreakfast', { by: 1 });
                 result.decrement('breakfastConsumed', { by: 1 });
                 result.update({ statusBreakfast: false })
+                const findUltimateRegister = await History.findOne({
+                    order: [['createdAt', 'DESC']]
+                  });
+                if(findUltimateRegister){
+                    findUltimateRegister.destroy({
+                        where: { cedulaCliente: ci }
+                    })
+                }
             }
             return result;
         } catch (error) {
@@ -78,7 +86,15 @@ class RefrigeriosProcessService{
             if (result) {
                 result.increment('totalLunch', { by: 1 });
                 result.decrement('lunchesConsumed', { by: 1 });
-                result.update({ statusLunch: false })
+                result.update({ statusLunch: false });
+                const findUltimateRegister = await History.findOne({
+                    order: [['createdAt', 'DESC']]
+                  });
+                if(findUltimateRegister){
+                    findUltimateRegister.destroy({
+                        where: { cedulaCliente: ci }
+                    })
+                }
             }
             return result;
         } catch (error) {
@@ -120,7 +136,6 @@ class RefrigeriosProcessService{
             if (result) {
                 result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
             }
-            console.log(result)
             return result;
         } catch (error) {
             throw error;
