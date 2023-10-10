@@ -94,6 +94,10 @@ const Client = db.define('clients', {
         defaultValue: false,
         field:"estatus_almuerzo",
     },
+    readPolitics: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     
 
 });

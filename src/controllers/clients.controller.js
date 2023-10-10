@@ -31,6 +31,16 @@ const createClient = async (req, res) => {
     }
 }
 
+const createClientForUser = async (req, res) => {
+    try {
+        const client = req.body;
+        const result = await ClientService.createClientForUser(client);
+        res.status(201).json({ message: 'resource created successfully' });
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 const updateClient = async (req, res) => {
     try {
         const { id } = req.params;
@@ -61,6 +71,7 @@ module.exports = {
     getAllClients,
     getClient,
     createClient,
+    createClientForUser,
     updateClient,
-    deleteClient
+    deleteClient,
 }
