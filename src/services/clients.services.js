@@ -49,6 +49,17 @@ class ClientService {
         }
     }
 
+    static async getRepresentante(id) {
+        try {
+            const result = await Representative.findOne({
+                where: { id }
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async createClient(client) {
         try {
             const { names, cedulaRepresentante, email,

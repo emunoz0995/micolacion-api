@@ -1,5 +1,7 @@
 const ClientService = require('../services/clients.services');
 const Utils = require('../utils/Utils');
+const Representative = require('../models/representative.model');
+const transporter = require('../utils/mailer');
 
 const getAllClients = async (req, res) => {
     try {
@@ -35,10 +37,39 @@ const createClientForUser = async (req, res) => {
     try {
         const client = req.body;
         const result = await ClientService.createClientForUser(client);
-        res.status(201).json({ message: 'resource created successfully' });
-    } catch (error) {
+        if (result.dataValues.representativeId) {
+          const representante_id = result.dataValues.representativeId;
+          const representante = await ClientService.getRepresentante(representante_id);
+            console.log(representante.dataValues.email)
+          res.status(201).json({ message: 'resource created successfully' });
+
+          const userRegistrationEmail = {
+            from: 'sistema.micolacion@gmail.com',
+            to: representante.dataValues.email,
+            cc: 'micolacion.cv@gmail.com',
+            subject: 'Email confirmation',
+            html: `<h1>Su registro a sido recibido</h1>
+                   <p>Estimado/a ${representante.dataValues.names},</p>
+                   <p>su aceptacion a las politicas de seguridad a sido registrada.</p>
+                   <p>Mi Colacion agradece el tiempo tomado en completar el formulario.</p>
+                   <h3>Atentamente</h3>
+                   <h3>Mi Colacion</h3>`,
+          };
+
+          transporter.sendMail(userRegistrationEmail, (error, info) => {
+            if (error) {
+              console.error('Error al enviar el correo electrónico:', error);
+            } else {
+              console.log('Correo electrónico de notificación enviado:', info.response);
+            }
+          });
+        } else {
+          res.status(400).json({ message: 'something wrong' });
+        }
+      } catch (error) {
         res.status(400).json(error.message);
-    }
+      }
+      
 }
 
 const updateClient = async (req, res) => {
@@ -61,7 +92,7 @@ const deleteClient = async (req, res) => {
         const result = await ClientService.delete({
             where: { id }
         });
-        res.status(200).json({message:'resource deleted successfully'})
+        res.status(200).json({ message: 'resource deleted successfully' })
     } catch (error) {
         res.status(400).json(error.message);
     }
