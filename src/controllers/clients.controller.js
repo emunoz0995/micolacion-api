@@ -48,12 +48,12 @@ const createClientForUser = async (req, res) => {
             to: representante.dataValues.email,
             cc: 'micolacion.cv@gmail.com',
             subject: 'Email confirmation',
-            html: `<h1>Su registro a sido recibido</h1>
+            html: `<h1>Su registro ha sido recibido</h1>
                    <p>Estimado/a ${representante.dataValues.names},</p>
-                   <p>su aceptacion a las politicas de seguridad a sido registrada.</p>
-                   <p>Mi Colacion agradece el tiempo tomado en completar el formulario.</p>
+                   <p>su aceptación a las políticas de seguridad ha sido registrada.</p>
+                   <p>Mi Colación agradece el tiempo tomado en completar el formulario.</p>
                    <h3>Atentamente</h3>
-                   <h3>Mi Colacion</h3>`,
+                   <h3>Mi Colación</h3>`,
           };
 
           transporter.sendMail(userRegistrationEmail, (error, info) => {
