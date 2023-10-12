@@ -13,17 +13,17 @@ const facturationRoutes = require('./facturation.routes');
 
 const routerApi = (app) => {
 
-    app.use("/users", authRoutes);
-    app.use("/users", userRoutes);
-    app.use("/clients", clientRoutes);
-    app.use("/services", serviceRoutes)
-    app.use("/schools", schoolRoutes);
-    app.use("/sections", sectionRoutes);
-    app.use("/reports",reportsRoutes)
-    app.use("/refrigerios_lcv", breakLcvRoutes);
-    app.use("/almuerzos_lcv",lunchLcvRoutes)
-    app.use("/procedures", proceduresRoutes);
-    app.use("/facturations", facturationRoutes)
+    app.use("/api/users", authRoutes);
+    app.use("/api/users", userRoutes);
+    app.use("/api/clients", clientRoutes);
+    app.use("/api/services", serviceRoutes)
+    app.use("/api/schools", schoolRoutes);
+    app.use("/api/sections", sectionRoutes);
+    app.use("/api/reports",reportsRoutes)
+    app.use("/api/refrigerios_lcv", breakLcvRoutes);
+    app.use("/api/almuerzos_lcv",lunchLcvRoutes)
+    app.use("/api/procedures", proceduresRoutes);
+    app.use("/api/facturations", facturationRoutes)
 
     // app.use("/api/v1", producRoutes);
     // app.use("/api/v1", cartRoutes);
