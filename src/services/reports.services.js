@@ -33,10 +33,9 @@ class ReportService {
             const result = await Clients.findAll({
                 where: { schoolId: school_id, 
                          sectionId:[1,2,3,4,5,6,7],
-                         [Op.or]:{
-                            totalBreakfast: { [Op.lte]: 5 },
-                            totalLunch: { [Op.lte]: 5 },
-                         }          
+                         totalBreakfast: { [Op.lte]: 5 },
+                         totalLunch: { [Op.lte]: 5 },
+                                 
                         },
                 include: [{
                     model: Section,
