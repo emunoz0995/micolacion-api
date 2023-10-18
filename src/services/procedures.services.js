@@ -142,6 +142,19 @@ class RefrigeriosProcessService{
         }
     }
 
+    static async startDay(schoolId) {
+        try {
+            const result = await Clients.update({statusBreakfast: false, statusLunch: false},
+                { 
+                where: { schoolId } 
+                } );
+            return result;
+        } catch (error) {
+           console.log(error)
+            throw error;
+        }
+    }
+
     static async paidService(id) {
         try {
             const result = await History.findOne({ where: { id } });

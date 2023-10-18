@@ -88,6 +88,16 @@ const renewService = async (req, res, next) => {
     }
 }
 
+const startDay = async (req, res) => {
+    try {
+        const schoolId = Utils.decode(req.params.school_id);
+        const result = await RefrigeriosProcessService.startDay(schoolId);
+        res.status(200).json({message: 'day restart successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 const paidService = async (req, res, next) => {
     try {
         const id = req.params.client_id;
@@ -112,5 +122,6 @@ module.exports = {
     incrementLunch,
     revertLunch,
     registerExtra,
-    renewService
+    renewService,
+    startDay
 }
