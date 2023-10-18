@@ -1,6 +1,4 @@
 const FacturationService = require('../services/facturation.services');
-const xmlbuilder = require('xmlbuilder');
-const fs = require('fs');
 const Utils = require('../utils/Utils');
 
 const getServicesReceivable = async (req, res) => {
@@ -23,8 +21,18 @@ const getServicesGenerateXML = async (req, res) => {
     }
 }
 
+const getHistory = async (req, res) => {
+    try {
+        const client_ci = req.params.client_ci;
+        const result = await FacturationService.getHistory(client_ci);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 
 module.exports = {
     getServicesReceivable,
     getServicesGenerateXML,
+    getHistory,
 }
