@@ -7,11 +7,11 @@ const { xmlRenewServices, xmlPaidServices } = require('../middlewares/registerXM
 
 const router = Router();
 
-router.put('/decrement_breackfast/:client_ci', decrementBreakFast);
+router.put('/decrement_breackfast/:client_ci', decrementBreakFast, historyBreakFast);
 router.put('/increment_breackfast/:client_ci', incrementBreakFast, historyBreakFast);
 router.put('/revert_breackfast/:client_ci', revertBreakFast);
 
-router.put('/decrement_lunch/:client_ci', decrementLunch);
+router.put('/decrement_lunch/:client_ci', decrementLunch, historyLuch);
 router.put('/increment_lunch/:client_ci', incrementLunch, historyLuch);
 router.put('/revert_lunch/:client_ci', revertLunch);
 
