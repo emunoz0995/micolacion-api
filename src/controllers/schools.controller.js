@@ -40,7 +40,6 @@ const createSchool = async (req, res) => {
 const updateSchool = async (req, res) => {
     try {
         const school_id = Utils.decode(req.params.id);
-        console.log(school_id)
         const school = req.body;
         const result = await SchoolService.updateSchool(school, {
             where: { id: school_id },

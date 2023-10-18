@@ -38,8 +38,6 @@ class SectionsService {
                 where: { id },
                 attributes: ['id', 'name', 'isLcv', 'isCervantes', 'active']
             });
-
-            console.log(result)
             return result;
         } catch (error) {
             throw error;

@@ -70,9 +70,6 @@ const generateXML = async (req, res) => {
         res.setHeader('Content-Type','application/xml; charset=utf-8');
         res.setHeader('Content-Disposition', 'attachment; filename=Factura00002020.xml');
         res.send(xmlString);
-
-        console.log(xmlString)
-
     } catch (error) {
         res.status(400).json(error.message)
     }

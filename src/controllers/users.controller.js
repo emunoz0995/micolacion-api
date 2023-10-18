@@ -11,7 +11,6 @@ const getAllUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        console.log(req.params)
         const { user_id } = req.params;
         const result = await UserService.getUserById(user_id);
         res.status(200).json(result);
@@ -37,7 +36,6 @@ const updateUser = async (req, res) => {
         const result = await UserService.updateUser(user, {
             where: { id },
         });
-        console.log(result)
         res.status(200).json({message: 'resource updated successfully'});
     } catch (error) {
         res.status(400).json(error.message);

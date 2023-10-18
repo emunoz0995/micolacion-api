@@ -27,7 +27,6 @@ const register = async(req, res) => {
 const login = async(req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body);
         if(!email){
             res.status(400).json({
                 error:'Missing data',

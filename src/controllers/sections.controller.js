@@ -47,7 +47,6 @@ const updateSection = async (req, res) => {
         const result = await SectionsService.updateSection(section, {
             where: { id },
         });
-        console.log(result)
         res.status(200).json({message: 'resource updated successfully'});
     } catch (error) {
         res.status(400).json(error.message);

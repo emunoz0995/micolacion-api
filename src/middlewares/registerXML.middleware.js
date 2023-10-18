@@ -18,7 +18,6 @@ class xmlMiddleware {
                     breakfastConsumed,lunchesConsumed,totalExtras});
             }
         } catch (error) {
-          //  console.log(error)
             throw error;
         }
     };

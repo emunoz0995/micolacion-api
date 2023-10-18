@@ -42,7 +42,6 @@ class ClientService {
                     attributes: ['name'],
                 }]
             });
-            console.log(result)
             return result;
         } catch (error) {
             throw error;

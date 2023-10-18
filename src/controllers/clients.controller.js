@@ -40,9 +40,7 @@ const createClientForUser = async (req, res) => {
         if (result.dataValues.representativeId) {
           const representante_id = result.dataValues.representativeId;
           const representante = await ClientService.getRepresentante(representante_id);
-            console.log(representante.dataValues.email)
           res.status(201).json({ message: 'resource created successfully' });
-
           const userRegistrationEmail = {
             from: 'sistema.micolacion@gmail.com',
             to: representante.dataValues.email,
@@ -79,7 +77,6 @@ const updateClient = async (req, res) => {
         const result = await ClientService.updateClient(client, {
             where: { id },
         });
-        console.log(result)
         res.status(200).json({message: 'resource updated successfully'});
     } catch (error) {
         res.status(400).json(error.message);

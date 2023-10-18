@@ -31,7 +31,6 @@ const getServicesExtras = async (req, res) => {
 
 const getService = async (req, res) => {
     try {
-        console.log(req.params)
         const { service_id } = req.params;
         const result = await ServicesService.getServiceById(service_id);
         res.status(200).json(result);
@@ -57,7 +56,6 @@ const updateService = async (req, res) => {
         const result = await ServicesService.updateService(service, {
             where: { id },
         });
-        console.log(result)
         res.status(200).json({message: 'resource updated successfully'});
     } catch (error) {
         res.status(400).json(error.message);

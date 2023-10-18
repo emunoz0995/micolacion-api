@@ -37,7 +37,6 @@ const decrementLunch = async (req, res) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.decrementLunch(ci);
-        console.log(result)
         res.status(200).json({message: 'Lunch delivered successfully'});
     } catch (error) {
         res.status(400).json(error.message);
@@ -47,7 +46,6 @@ const incrementLunch = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.incrementLunch(ci);
-        console.log(result)
         res.status(200).json({message: 'Lunch delivered successfully'});
         next();
     } catch (error) {
