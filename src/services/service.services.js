@@ -47,8 +47,7 @@ class ServicesService {
     static async getServiceById(id) {
         try {
             const result = await Services.findOne({
-                where: { id },
-                attributes: ['id','code','name','price','active']
+                where: { id }
             });
             return result;
         } catch (error) {
