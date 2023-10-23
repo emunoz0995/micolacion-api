@@ -6,6 +6,8 @@ const schoolRoutes = require('./schools.routes');
 const sectionRoutes = require('./sections.routes');
 const breakLcvRoutes = require('./lcv/refrigerios.routes');
 const lunchLcvRoutes = require('./lcv/almuerzos.routes');
+const breakCervantesRoutes = require('./cervantes/refrigerios.routes');
+const lunchCervantesRoutes = require('./cervantes/almuerzos.routes');
 const proceduresRoutes = require('./procedures.routes');
 const reportsRoutes = require('./reports.routes');
 const facturationRoutes = require('./facturation.routes');
@@ -22,13 +24,11 @@ const routerApi = (app) => {
     app.use("/api/reports",reportsRoutes)
     app.use("/api/refrigerios_lcv", breakLcvRoutes);
     app.use("/api/almuerzos_lcv",lunchLcvRoutes)
+    app.use("/api/refrigerios_cervantes", breakCervantesRoutes);
+    app.use("/api/almuerzos_cervantes",lunchCervantesRoutes)
     app.use("/api/procedures", proceduresRoutes);
     app.use("/api/facturations", facturationRoutes)
-
-    // app.use("/api/v1", producRoutes);
-    // app.use("/api/v1", cartRoutes);
-    // app.use("/api/v1", orderRoutes);
-
+    
   };
   
   module.exports = routerApi;
