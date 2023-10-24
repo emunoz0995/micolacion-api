@@ -1,6 +1,7 @@
 const History = require('../models/historical.model');
 const Section = require('../models/sections.model');
-const Services = require('../models/services.model')
+const Services = require('../models/services.model');
+const Clients = require('../models/clients.model');
 const Representative = require('../models/representative.model');
 const XML = require ('../models/generateXML.model');
 const { Op } = require('sequelize');
@@ -76,6 +77,28 @@ class FacturationService {
                 },{
                     model: Representative,
                     as: 'history_representante',
+                }]
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+    static async getClientByCi(cedulaCliente) {
+        try {
+            const result = await Clients.findOne({
+                where: { cedulaCliente },
+                include: [{
+                    model: Representative,
+                    as: 'cliente_representante',
+                },{
+                    model: Section,
+                    as: 'cliente_seccion',
+                    attributes: ['name'],
+                }, {
+                    model: Services,
+                    as: 'cliente_servicio',
+                    attributes: ['name'],
                 }]
             });
             return result;

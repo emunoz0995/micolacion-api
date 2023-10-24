@@ -31,8 +31,19 @@ const getHistory = async (req, res) => {
     }
 }
 
+const getClient = async (req, res) => {
+    try {
+        const client_ci = req.params.client_ci;
+        const result = await FacturationService.getClientByCi(client_ci);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getServicesReceivable,
     getServicesGenerateXML,
     getHistory,
+    getClient,
 }
