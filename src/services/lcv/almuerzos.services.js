@@ -7,6 +7,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: 3, schoolId: school_id, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -26,6 +29,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId:[1,2], schoolId: school_id, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -45,6 +51,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: 4, schoolId: school_id, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -64,6 +73,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: [1,2,3,4], schoolId: school_id, serviceId: 41, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -83,6 +95,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: [8,9], schoolId: school_id, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -102,6 +117,9 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { statusLunch: true, schoolId: school_id },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',

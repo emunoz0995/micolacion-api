@@ -9,6 +9,9 @@ class ClientService {
         try {
             const result = await Clients.findAll({
                 where: { schoolId: school_id },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',

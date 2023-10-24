@@ -7,6 +7,9 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: 5, schoolId: school_id, statusBreakfast: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -26,6 +29,9 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: 6, schoolId: school_id, statusBreakfast: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -45,6 +51,9 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: 7, schoolId: school_id, statusBreakfast: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -64,6 +73,9 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { sectionId: [5,6,7], schoolId: school_id, serviceId: 41, statusBreakfast: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -83,6 +95,9 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { statusBreakfast: true, schoolId: school_id },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
