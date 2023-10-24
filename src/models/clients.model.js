@@ -51,31 +51,26 @@ const Client = db.define('clients', {
     },
     totalBreakfast: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"total_desayunos",
     },
     totalLunch: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"total_almuerzos",
     },
     breakfastConsumed: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"desayunos_consumidos",
     },
     lunchesConsumed: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"almuerzos_consumidos",
     },
     totalExtras: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"total_extras",
     },

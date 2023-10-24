@@ -46,19 +46,16 @@ const History = db.define('history', {
     },
     breakfastConsumed: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"desayunos_consumidos",
     },
     lunchesConsumed: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"almuerzos_consumidos",
     },
     extrasConsumed: {
         type: DataTypes.INTEGER,
-        allowNull: true,
         defaultValue: 0,
         field:"extras_consumidos",
     },
