@@ -41,9 +41,20 @@ const getReportLunches = async (req, res) => {
     }
 }
 
+const getReportHistory = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const result = await ReportService.getReportHistory(school_id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getReportGeneral,
     getReportMenorFive,
     getReportBreakFast,
     getReportLunches,
+    getReportHistory,
 }

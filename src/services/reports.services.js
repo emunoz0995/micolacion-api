@@ -1,7 +1,8 @@
 const Clients = require('../models/clients.model');
 const Section = require('../models/sections.model');
-const Services = require('../models/services.model')
+const Services = require('../models/services.model');
 const Representative = require('../models/representative.model');
+const History = require('../models/historical.model');
 const { Op } = require('sequelize');
 
 class ReportService {
@@ -100,6 +101,31 @@ class ReportService {
                 },{
                     model: Representative,
                     as: 'cliente_representante',
+                }]
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }    
+
+    static async getReportHistory(school_id) {
+        try {
+            const result = await History.findAll({
+                where: { schoolId: school_id},
+                include: [{
+                    model: Section,
+                    as: 'history_seccion',
+                    attributes: ['name'],
+                }, {
+                    model: Services,
+                    as: 'history_servicio',
+                    attributes: {
+                        exclude: ['createdAt','updatedAt'],
+                    }        
+                },{
+                    model: Representative,
+                    as: 'history_representante',
                 }]
             });
             return result;
