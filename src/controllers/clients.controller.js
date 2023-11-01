@@ -74,9 +74,7 @@ const updateClient = async (req, res) => {
     try {
         const { id } = req.params;
         const client = req.body;
-        const result = await ClientService.updateClient(client, {
-            where: { id },
-        });
+        const result = await ClientService.updateClient(client, id );
         res.status(200).json({message: 'resource updated successfully'});
     } catch (error) {
         res.status(400).json(error.message);

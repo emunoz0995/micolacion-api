@@ -126,16 +126,19 @@ class ClientService {
     static async updateClient(client, id) {
         try {
             const { names, cedulaRepresentante, email,
-                adress, telefon, cedulaCliente, firstName,
-                lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
-            const searchRepresentante = await Representative.findOne({ where: { cedulaRepresentante } });
+                adress, telefon, cedulaCliente, firstName,lastName, 
+                sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
 
-            await Representative.update({ names, cedulaRepresentante, email, adress, telefon },
-                { where: { id: searchRepresentante.id } });
+            const result = await Clients.findOne({ where:{id}});
+            if(result){
+                result.update({cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active})
+            }               
                 
-            const result = await Clients.update({
-                cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active
-            }, id);
+            const representante = await Representative.findOne({ where: { id: result.dataValues.representativeId } });
+            if (representante) {
+                representante.update({ names, cedulaRepresentante, email, adress, telefon })
+            }
+
             return result;
         } catch (error) {
             throw error;
