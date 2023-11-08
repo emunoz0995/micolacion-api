@@ -21,6 +21,17 @@ const getServicesGenerateXML = async (req, res) => {
     }
 }
 
+const getServicesGenerateXMlByClient = async (req, res) => {
+    try {
+        const {client_ci} = req.params;
+        console.log(client_ci)
+        const result = await FacturationService.getServicesGenerateXMlByClient(client_ci);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 const getHistory = async (req, res) => {
     try {
         const client_ci = req.params.client_ci;
@@ -44,6 +55,7 @@ const getClient = async (req, res) => {
 module.exports = {
     getServicesReceivable,
     getServicesGenerateXML,
+    getServicesGenerateXMlByClient,
     getHistory,
     getClient,
 }

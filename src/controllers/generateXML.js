@@ -2,39 +2,72 @@ const xmlbuilder = require('xmlbuilder');
 
 const generateXML = async (req, res) => {
     try {
-        const opts = {
-            version:"1.0", 
-            encoding:"UTF-8", 
-            standalone:"yes",
-           }
 
-        const informacionFactura ={
-        fechaEmision:"22/08/2023",
-		dirEstablecimientoKM: "2 1 2 AV  SIMON BOLIVAR S N FRENTE A LA CASA DE LA SELE",
-		obligadoContabilidad:"SI",
-		tipoIdentificacionComprador:"04",
-		razonSocialComprador:"MUNOZ ALTAMIRANO MARIA SOL",
-		identificacionComprador:"1706602792001",
-		totalSinImpuestos:"735.00",
-		totalDescuento:"0",
-		totalConImpuestostotalImpuesto:"",
-		codigo:"2",
-		codigoPorcentaje:"2",
-		baseImponible:"735.00",
-		valor:"88.20",
-	    totalImpuesto:"",
-		propina:"0",
-		importeTotal:"823.20",
-		moneda:"DOLAR",
-		pagos:"",
-		formaPago:"20",
-		total:"823.20",
-		plazo:"0",
-		unidadTiempo:"dias",
-		pago:"",
+        const formatDateToLocal = (date) => {
+            const formattedDate = new Date(date);
+            const dia = formattedDate.getDate().toString().padStart(2, '0');
+            const mes = (formattedDate.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
+            const anio = formattedDate.getFullYear();
+            return `${dia}/${mes}/${anio}`;
+          }
+
+        var today = new Date();
+
+        const opts = {
+            version: "1.0",
+            encoding: "UTF-8",
+            standalone: "yes",
         }
 
-        const xml = xmlbuilder.create('factura',opts);
+        const invoice = req.body;
+
+        const calculateSubTotal = () => {
+            return invoice.reduce((total, item) => total + item.quantity * item.price, 0);
+        };
+    
+        const calculateIva = () => {
+            const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
+            return (subtotal * 0.12).toFixed(2);
+        };
+
+        const calculateIvaPorItem = () => {
+            const subtotal = item.quantity * item.price;
+            return (subtotal * 0.12).toFixed(2);
+        };
+    
+        const calculateTotal = () => {
+            const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
+            const iva = (subtotal * 0.12).toFixed(2);
+            return (parseInt(subtotal) + parseFloat(iva)).toFixed(2);
+        };
+
+        const informacionFactura = {
+            fechaEmision: formatDateToLocal(today),
+            dirEstablecimientoKM: invoice[0].dir,
+            obligadoContabilidad: "SI",
+            tipoIdentificacionComprador: "04",
+            razonSocialComprador: invoice[0].names,
+            identificacionComprador: invoice[0].ci,
+            totalSinImpuestos: calculateSubTotal(),
+            totalDescuento: "0",
+            totalConImpuestostotalImpuesto: "",
+            codigo: "2",
+            codigoPorcentaje: "2",
+            baseImponible: calculateSubTotal(),
+            valor: calculateIva(),
+            totalImpuesto: "",
+            propina: "0",
+            importeTotal: calculateTotal(),
+            moneda: "DOLAR",
+            pagos: "",
+            formaPago: "20",
+            total: calculateTotal(),
+            plazo: "0",
+            unidadTiempo: "dias",
+            pago: "",
+        }
+
+        const xml = xmlbuilder.create('factura', opts);
 
         const infoTributaria = xml.ele('infoTributaria');
         infoTributaria.ele('ambiente', '2');
@@ -51,24 +84,32 @@ const generateXML = async (req, res) => {
         infoTributaria.ele('agenteRetencion', '1');
         infoTributaria.ele('contribuyenteRimpe', 'CONTRIBUYENTE RÉGIMEN RIMPE');
 
-        const infoFactura = xml.ele('infoTributaria');
+        const infoFactura = xml.ele('infoFactura');
         infoFactura.ele(informacionFactura);
 
         const detalles = xml.ele('detalles');
+        invoice.forEach((item) => {
             const detalle = detalles.ele('detalle')
-                detalle.ele('codigoPrincipal', '119');
-                detalle.ele('codigoAuxiliar', 'MC-0020');
-                detalle.ele('descripcion', 'TARJETA ALMUERZOS SECUNDARIA  ENERO A JUNIO 2022-2023  Cajas Munoz Francisco Jose');
-                detalle.ele('cantidad', '1.00');
-                detalle.ele('precioUnitario', '367.50');
-                detalle.ele('descuento', '0');
-                detalle.ele('precioTotalSinImpuesto', '367.50');
-                detalle.ele('impuestos', '');
-                   
+            detalle.ele('codigoPrincipal', item.id);
+            detalle.ele('codigoAuxiliar', item.code);
+            detalle.ele('descripcion', item.description);
+            detalle.ele('cantidad', item.quantity);
+            detalle.ele('precioUnitario', item.price);
+            detalle.ele('descuento', item.percent);
+            detalle.ele('precioTotalSinImpuesto', item.price);
+            detalle.ele('impuestos', '');
+            detalle.ele('codigo', '2');
+            detalle.ele('codigoPorcentaje', '2');
+            detalle.ele('tarifa', '12.00');
+            detalle.ele('baseImponible', item.price);
+            detalle.ele('valor', ((item.quantity * item.price)*0.12).toFixed(2));
+        })
+        
+
         const xmlString = xml.end({ pretty: true });
 
-        res.setHeader('Content-Type','application/xml; charset=utf-8');
         res.setHeader('Content-Disposition', 'attachment; filename=Factura00002020.xml');
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
         res.send(xmlString);
     } catch (error) {
         res.status(400).json(error.message)

@@ -3,14 +3,14 @@ const Section = require('../models/sections.model');
 const Services = require('../models/services.model');
 const Clients = require('../models/clients.model');
 const Representative = require('../models/representative.model');
-const XML = require ('../models/generateXML.model');
+const XML = require('../models/generateXML.model');
 const { Op } = require('sequelize');
 
 class FacturationService {
     static async getServicesReceivable(school_id) {
         try {
             const result = await History.findAll({
-                where: { schoolId: school_id, paidService: false},
+                where: { schoolId: school_id, paidService: false },
                 include: [{
                     model: Section,
                     as: 'history_seccion',
@@ -19,10 +19,10 @@ class FacturationService {
                     model: Services,
                     as: 'history_servicio',
                     attributes: {
-                        exclude: ['createdAt','updatedAt'],
+                        exclude: ['createdAt', 'updatedAt'],
                     }
-                        
-                },{
+
+                }, {
                     model: Representative,
                     as: 'history_representante',
                 }]
@@ -35,8 +35,29 @@ class FacturationService {
 
     static async getServicesGenerateXML(school_id) {
         try {
+            const result = await Representative.findAll({
+                include: [{
+                    model: Clients,
+                    as: 'representante_cliente',
+                    include: [{
+                        model: Services,
+                    as: 'cliente_servicio',
+                    attributes:['name','price']
+                    }],
+                    where: { schoolId: school_id },
+                }],
+                where: { generateXML: true },
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getServicesGenerateXMlByClient(ci) {
+        try {
             const result = await XML.findAll({
-                where: { schoolId: school_id, isGenerateXML: false},
+                where: { representativeId: ci },
                 include: [{
                     model: Section,
                     as: 'XML_seccion',
@@ -45,10 +66,9 @@ class FacturationService {
                     model: Services,
                     as: 'XML_servicio',
                     attributes: {
-                        exclude: ['createdAt','updatedAt'],
+                        exclude: ['createdAt', 'updatedAt'],
                     }
-                        
-                },{
+                }, {
                     model: Representative,
                     as: 'XML_representante',
                 }]
@@ -62,7 +82,7 @@ class FacturationService {
     static async getHistory(client_ci) {
         try {
             const result = await History.findAll({
-                where: { cedulaCliente: client_ci},
+                where: { cedulaCliente: client_ci },
                 include: [{
                     model: Section,
                     as: 'history_seccion',
@@ -71,10 +91,10 @@ class FacturationService {
                     model: Services,
                     as: 'history_servicio',
                     attributes: {
-                        exclude: ['createdAt','updatedAt'],
+                        exclude: ['createdAt', 'updatedAt'],
                     }
-                        
-                },{
+
+                }, {
                     model: Representative,
                     as: 'history_representante',
                 }]
@@ -91,7 +111,7 @@ class FacturationService {
                 include: [{
                     model: Representative,
                     as: 'cliente_representante',
-                },{
+                }, {
                     model: Section,
                     as: 'cliente_seccion',
                     attributes: ['name'],

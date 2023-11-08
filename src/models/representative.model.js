@@ -8,16 +8,16 @@ const Representative = db.define('representative', {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true
-    },   
+    },
     names: {
         type: DataTypes.STRING,
         allowNull: false,
-        field:"nombres",
+        field: "nombres",
     },
     cedulaRepresentante: {
         type: DataTypes.STRING,
         allowNull: false,
-        field:"cedula_representante",
+        field: "cedula_representante",
         unique: true,
     },
     email: {
@@ -27,12 +27,16 @@ const Representative = db.define('representative', {
     adress: {
         type: DataTypes.STRING,
         allowNull: true,
-        field:"direccion",
+        field: "direccion",
     },
     telefon: {
         type: DataTypes.STRING,
         allowNull: true,
-        field:"telefono",
+        field: "telefono",
+    },
+    generateXML: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
 });
 
