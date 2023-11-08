@@ -1,6 +1,6 @@
 const xmlbuilder = require('xmlbuilder');
 
-const generateXML = async (req, res) => {
+const generateXML = async (req, res , next) => {
     try {
 
         const formatDateToLocal = (date) => {
@@ -19,6 +19,11 @@ const generateXML = async (req, res) => {
             standalone: "yes",
         }
 
+        const opts2 = {
+            id: "comprobante",
+            version: "1.1.0",
+        }
+
         const invoice = req.body;
 
         const calculateSubTotal = () => {
@@ -27,11 +32,6 @@ const generateXML = async (req, res) => {
     
         const calculateIva = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
-            return (subtotal * 0.12).toFixed(2);
-        };
-
-        const calculateIvaPorItem = () => {
-            const subtotal = item.quantity * item.price;
             return (subtotal * 0.12).toFixed(2);
         };
     
@@ -67,8 +67,7 @@ const generateXML = async (req, res) => {
             pago: "",
         }
 
-        const xml = xmlbuilder.create('factura', opts);
-
+        const xml = xmlbuilder.create('factura', opts).att(opts2);
         const infoTributaria = xml.ele('infoTributaria');
         infoTributaria.ele('ambiente', '2');
         infoTributaria.ele('tipoEmision', '1');
@@ -103,14 +102,23 @@ const generateXML = async (req, res) => {
             detalle.ele('tarifa', '12.00');
             detalle.ele('baseImponible', item.price);
             detalle.ele('valor', ((item.quantity * item.price)*0.12).toFixed(2));
-        })
-        
+        });
+
+        const infoAdicional = xml.ele('infoAdicional');
+        const campoAdicional = infoAdicional.ele('campoAdicional')
+        campoAdicional.ele('campoAdicional','Agente de Retencion Resolucion Nro  NAC-DNCRASC20-00000001').att("nombre","Tipo");
+        campoAdicional.ele('campoAdicional','CONTRIBUYENTE RÉGIMEN RIMPE').att("nombre","RIMPE");
+        campoAdicional.ele('campoAdicional', invoice[0].dir).att("nombre","Direccion");
+        campoAdicional.ele('campoAdicional', invoice[0].telefon).att("nombre","Telefono");
+        campoAdicional.ele('campoAdicional', invoice[0].email).att("nombre","Email");
+        campoAdicional.ele('campoAdicional', 'VENTAS ENE. FEB. MAR. ABR. MAY. JUNIO').att("nombre","Observacion");
 
         const xmlString = xml.end({ pretty: true });
 
         res.setHeader('Content-Disposition', 'attachment; filename=Factura00002020.xml');
         res.setHeader('Content-Type', 'application/xml; charset=utf-8');
         res.send(xmlString);
+        next();
     } catch (error) {
         res.status(400).json(error.message)
     }

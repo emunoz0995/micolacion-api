@@ -35,9 +35,9 @@ class ReportService {
                 where: { schoolId: school_id, 
                          sectionId:[1,2,3,4,5,6,7],
                          totalBreakfast: { [Op.lte]: 5 },
-                         totalLunch: { [Op.lte]: 5 },
-                                 
+                         totalLunch: { [Op.lte]: 5 },        
                         },
+                order: [['lastName', 'ASC']],
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
