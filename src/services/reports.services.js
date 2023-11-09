@@ -133,6 +133,31 @@ class ReportService {
             throw error;
         }
     }    
+
+    static async getReportHistoryByClient(client_ci) {
+        try {
+            const result = await History.findAll({
+                where: { cedulaCliente: client_ci},
+                include: [{
+                    model: Section,
+                    as: 'history_seccion',
+                    attributes: ['name'],
+                }, {
+                    model: Services,
+                    as: 'history_servicio',
+                    attributes: {
+                        exclude: ['createdAt','updatedAt'],
+                    }        
+                },{
+                    model: Representative,
+                    as: 'history_representante',
+                }]
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }    
 }
 
 module.exports = ReportService;

@@ -51,10 +51,21 @@ const getReportHistory = async (req, res) => {
     }
 }
 
+const getReportHistoryByClient = async (req, res) => {
+    try {
+        const client_ci = req.params.client_ci;
+        const result = await ReportService.getReportHistoryByClient(client_ci);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getReportGeneral,
     getReportMenorFive,
     getReportBreakFast,
     getReportLunches,
     getReportHistory,
+    getReportHistoryByClient,
 }
