@@ -1,6 +1,6 @@
 const xmlbuilder = require('xmlbuilder');
 
-const generateXML = async (req, res , next) => {
+const generateXML = async (req, res, next) => {
     try {
 
         const formatDateToLocal = (date) => {
@@ -9,7 +9,7 @@ const generateXML = async (req, res , next) => {
             const mes = (formattedDate.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
             const anio = formattedDate.getFullYear();
             return `${dia}/${mes}/${anio}`;
-          }
+        }
 
         var today = new Date();
 
@@ -29,12 +29,12 @@ const generateXML = async (req, res , next) => {
         const calculateSubTotal = () => {
             return invoice.reduce((total, item) => total + item.quantity * item.price, 0);
         };
-    
+
         const calculateIva = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             return (subtotal * 0.12).toFixed(2);
         };
-    
+
         const calculateTotal = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             const iva = (subtotal * 0.12).toFixed(2);
@@ -59,12 +59,14 @@ const generateXML = async (req, res , next) => {
             propina: "0",
             importeTotal: calculateTotal(),
             moneda: "DOLAR",
-            pagos: "",
-            formaPago: "20",
-            total: calculateTotal(),
-            plazo: "0",
-            unidadTiempo: "dias",
-            pago: "",
+            pagos: {
+                pago: {
+                    formaPago: "20",
+                    total: calculateTotal(),
+                    plazo: "0",
+                    unidadTiempo: "dias",
+                }
+            },
         }
 
         const xml = xmlbuilder.create('factura', opts).att(opts2);
@@ -89,29 +91,30 @@ const generateXML = async (req, res , next) => {
         const detalles = xml.ele('detalles');
         invoice.forEach((item) => {
             const detalle = detalles.ele('detalle')
-            detalle.ele('codigoPrincipal', item.id);
+            detalle.ele('codigoPrincipal', item.code);
             detalle.ele('codigoAuxiliar', item.code);
             detalle.ele('descripcion', item.description);
             detalle.ele('cantidad', item.quantity);
             detalle.ele('precioUnitario', item.price);
             detalle.ele('descuento', item.percent);
             detalle.ele('precioTotalSinImpuesto', item.price);
-            detalle.ele('impuestos', '');
-            detalle.ele('codigo', '2');
-            detalle.ele('codigoPorcentaje', '2');
-            detalle.ele('tarifa', '12.00');
-            detalle.ele('baseImponible', item.price);
-            detalle.ele('valor', ((item.quantity * item.price)*0.12).toFixed(2));
+            const impuestos = xml.ele('impuestos');
+            const impuesto = impuestos.ele('impuesto')
+            impuesto.ele('codigo', '2')
+            impuesto.ele('codigoPorcentaje', '2')
+            impuesto.ele('tarifa', '12.00')
+            impuesto.ele('baseImponible', item.price)
+            impuesto.ele('valor', ((item.quantity * item.price) * 0.12).toFixed(2));
         });
 
         const infoAdicional = xml.ele('infoAdicional');
         const campoAdicional = infoAdicional.ele('campoAdicional')
-        campoAdicional.ele('campoAdicional','Agente de Retencion Resolucion Nro  NAC-DNCRASC20-00000001').att("nombre","Tipo");
-        campoAdicional.ele('campoAdicional','CONTRIBUYENTE RÉGIMEN RIMPE').att("nombre","RIMPE");
-        campoAdicional.ele('campoAdicional', invoice[0].dir).att("nombre","Direccion");
-        campoAdicional.ele('campoAdicional', invoice[0].telefon).att("nombre","Telefono");
-        campoAdicional.ele('campoAdicional', invoice[0].email).att("nombre","Email");
-        campoAdicional.ele('campoAdicional', 'VENTAS ENE. FEB. MAR. ABR. MAY. JUNIO').att("nombre","Observacion");
+        campoAdicional.ele('campoAdicional', 'Agente de Retencion Resolucion Nro  NAC-DNCRASC20-00000001').att("nombre", "Tipo");
+        campoAdicional.ele('campoAdicional', 'CONTRIBUYENTE RÉGIMEN RIMPE').att("nombre", "RIMPE");
+        campoAdicional.ele('campoAdicional', invoice[0].dir).att("nombre", "Direccion");
+        campoAdicional.ele('campoAdicional', invoice[0].telefon).att("nombre", "Telefono");
+        campoAdicional.ele('campoAdicional', invoice[0].email).att("nombre", "Email");
+        campoAdicional.ele('campoAdicional', 'n/a').att("nombre", "Observacion");
 
         const xmlString = xml.end({ pretty: true });
 
