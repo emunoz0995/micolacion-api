@@ -1,7 +1,7 @@
 const Clients = require('../models/clients.model');
 const History = require('../models/historical.model');
 
-class RefrigeriosProcessService{
+class RefrigeriosProcessService {
 
     //breakfast
     static async decrementBreakFast(ci) {
@@ -10,14 +10,20 @@ class RefrigeriosProcessService{
             if (result) {
                 result.decrement('totalBreakfast', { by: 1 });
                 result.increment('breakfastConsumed', { by: 1 });
-                result.update({ statusBreakfast: true })
+                result.update({ statusBreakfast: true });
+                console.log(result.serviceId);
+                if (result.serviceId === 34 || 35 || 45 || 46 || 47) {
+                    result.decrement('totalLunch', { by: 1 });
+                    result.increment('lunchesConsumed', { by: 1 });
+                    result.update({ statusLunch: true })
+                }
             }
             return result;
         } catch (error) {
             throw error;
         }
     }
-    
+
     static async incrementBreakFast(ci) {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
@@ -39,8 +45,8 @@ class RefrigeriosProcessService{
                 result.update({ statusBreakfast: false })
                 const findUltimateRegister = await History.findOne({
                     order: [['createdAt', 'DESC']]
-                  });
-                if(findUltimateRegister){
+                });
+                if (findUltimateRegister) {
                     findUltimateRegister.destroy({
                         where: { cedulaCliente: ci }
                     })
@@ -67,7 +73,7 @@ class RefrigeriosProcessService{
             throw error;
         }
     }
-    
+
     static async incrementLunch(ci) {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
@@ -89,8 +95,8 @@ class RefrigeriosProcessService{
                 result.update({ statusLunch: false });
                 const findUltimateRegister = await History.findOne({
                     order: [['createdAt', 'DESC']]
-                  });
-                if(findUltimateRegister){
+                });
+                if (findUltimateRegister) {
                     findUltimateRegister.destroy({
                         where: { cedulaCliente: ci }
                     })
@@ -105,7 +111,7 @@ class RefrigeriosProcessService{
     //Services
 
     static async registerExtra(data) {
-        const {cedulaCliente, serviceId} = data;
+        const { cedulaCliente, serviceId } = data;
         try {
             const result = await Clients.findOne({ where: { cedulaCliente } });
             if (result) {
@@ -120,7 +126,7 @@ class RefrigeriosProcessService{
                     schoolId,
                     serviceId,
                     extrasConsumed,
-                    }
+                }
                 );
             }
         } catch (error) {
@@ -129,8 +135,8 @@ class RefrigeriosProcessService{
     }
 
 
-    static async renewService(ci,data) {
-        const {totalBreakfast, totalLunch} = data;
+    static async renewService(ci, data) {
+        const { totalBreakfast, totalLunch } = data;
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
@@ -144,13 +150,13 @@ class RefrigeriosProcessService{
 
     static async startDay(schoolId) {
         try {
-            const result = await Clients.update({statusBreakfast: false, statusLunch: false},
-                { 
-                where: { schoolId } 
-                } );
+            const result = await Clients.update({ statusBreakfast: false, statusLunch: false },
+                {
+                    where: { schoolId }
+                });
             return result;
         } catch (error) {
-           console.log(error)
+            console.log(error)
             throw error;
         }
     }

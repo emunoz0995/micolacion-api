@@ -6,7 +6,7 @@ class AlmuerzosService {
     static async getLunchBm(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 3, schoolId: school_id, statusLunch: false },
+                where: { sectionId: 3, serviceId:[32,35], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -28,7 +28,7 @@ class AlmuerzosService {
     static async getLunchBE(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:[1,2], schoolId: school_id, statusLunch: false },
+                where: { sectionId:[1,2], serviceId:[4,32,35], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -50,7 +50,7 @@ class AlmuerzosService {
     static async getLunchBS(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 4, schoolId: school_id, statusLunch: false },
+                where: { sectionId: 4, serviceId:[33,47], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -72,7 +72,7 @@ class AlmuerzosService {
     static async getLunchEventuales(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: [1,2,3,4], schoolId: school_id, serviceId: 41, statusLunch: false },
+                where: { sectionId: [1,2,3,4], schoolId: school_id, serviceId: [37,48], statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
