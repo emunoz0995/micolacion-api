@@ -98,7 +98,7 @@ const generateXML = async (req, res, next) => {
             detalle.ele('precioUnitario', item.price);
             detalle.ele('descuento', item.percent);
             detalle.ele('precioTotalSinImpuesto', item.price);
-            const impuestos = xml.ele('impuestos');
+            const impuestos = detalle.ele('impuestos');
             const impuesto = impuestos.ele('impuesto')
             impuesto.ele('codigo', '2')
             impuesto.ele('codigoPorcentaje', '2')
