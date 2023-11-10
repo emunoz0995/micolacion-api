@@ -11,7 +11,6 @@ class RefrigeriosProcessService {
                 result.decrement('totalBreakfast', { by: 1 });
                 result.increment('breakfastConsumed', { by: 1 });
                 result.update({ statusBreakfast: true });
-                console.log(result.serviceId);
                 if (result.serviceId === 34 || 35 || 45 || 46 || 47) {
                     result.decrement('totalLunch', { by: 1 });
                     result.increment('lunchesConsumed', { by: 1 });
@@ -66,7 +65,13 @@ class RefrigeriosProcessService {
             if (result) {
                 result.decrement('totalLunch', { by: 1 });
                 result.increment('lunchesConsumed', { by: 1 });
-                result.update({ statusLunch: true })
+                result.update({ statusLunch: true });
+                console.log(result.serviceId)
+                if (result.serviceId === 34 || 35 || 45 || 46 || 47) {
+                    result.decrement('totalBreakfast', { by: 1 });
+                    result.increment('breakfastConsumed', { by: 1 });
+                    result.update({ statusBreakfast: true });
+                }
             }
             return result;
         } catch (error) {
