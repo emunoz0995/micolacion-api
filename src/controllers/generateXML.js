@@ -80,7 +80,7 @@ const generateXML = async (req, res, next) => {
         infoTributaria.ele('codDoc', '01');
         infoTributaria.ele('estab', '002');
         infoTributaria.ele('ptoEmi', '002');
-        infoTributaria.ele('secuencial', '000004720');
+        infoTributaria.ele('secuencial', '');
         infoTributaria.ele('dirMatriz', 'KM 2 1 2 AV  SIMON BOLIVAR S N FRENTE A LA CASA DE LA SELE');
         infoTributaria.ele('agenteRetencion', '1');
         infoTributaria.ele('contribuyenteRimpe', 'CONTRIBUYENTE RÉGIMEN RIMPE');

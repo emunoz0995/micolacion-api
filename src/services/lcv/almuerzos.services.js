@@ -69,6 +69,28 @@ class AlmuerzosService {
             throw error;
         }
     }
+    static async getLunch2do3ro(school_id) {
+        try {
+            const result = await Clients.findAll({
+                where: { sectionId: 9, serviceId:[32,35], schoolId: school_id, statusLunch: false },
+                order: [
+                    ['lastName', 'ASC'],
+                ],
+                include: [{
+                    model: Section,
+                    as: 'cliente_seccion',
+                    attributes: ['name'],
+                }, {
+                    model: Services,
+                    as: 'cliente_servicio',
+                    attributes: ['name'],
+                }]
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
     static async getLunchEventuales(school_id) {
         try {
             const result = await Clients.findAll({
