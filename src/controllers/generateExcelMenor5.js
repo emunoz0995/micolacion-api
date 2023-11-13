@@ -16,12 +16,8 @@ const generateExcelMenor5 = async (req, res) => {
             return formattedDate;
         }
 
-        //RESPONSE PASSENGER FROM INGALA
-
         const school_id = Utils.decode(req.params.school_id);
         const result = await ReportService.getReportMenorFive(school_id);
-
-        console.log(result)
 
         //COLUMNS
 
@@ -86,20 +82,18 @@ const generateExcelMenor5 = async (req, res) => {
         ws.cell(7, 5).string("Servicio").style(headerLeftWrapStyle);
         ws.cell(7, 6).string("Refrigerios a favor").style(headerLeftWrapStyle);
         ws.cell(7, 7).string("Almuerzos a favor").style(headerLeftWrapStyle);
-
-
         //SHOW DATA
         for (var i = 0, l = result.length; i < l; i++) {
 
-            ws.cell(8 + i, 1).string(result[i].dataValues.cliente_representante?.names);
-            ws.cell(8 + i, 2).string(result[i].dataValues.cliente_representante?.email);
-            ws.cell(8 + i, 3).string(result[i].dataValues.cliente_representante?.telefon);
+            ws.cell(8 + i, 1).string(result[i].cliente_representante?.names);
+            ws.cell(8 + i, 2).string(result[i].cliente_representante?.email);
+            ws.cell(8 + i, 3).string(result[i].cliente_representante?.telefon);
             ws.cell(8 + i, 4).string(
-                result[i].dataValues.lastName + " " + result[i].dataValues.firstName
+                result[i].lastName + " " + result[i].firstName
             );
-            ws.cell(8 + i, 5).string(result[i].dataValues.cliente_servicio?.name);
-            ws.cell(8 + i, 6).string(result[i].dataValues?.totalBreakfast);
-            ws.cell(8 + i, 7).string(result[i].dataValues?.totalLunch);
+            ws.cell(8 + i, 5).string(result[i].cliente_servicio?.name);
+            ws.cell(8 + i, 6).number(result[i].totalBreakfast);
+            ws.cell(8 + i, 7).number(result[i].totalLunch);
         }
         //GENERATE EXCEL
         if (result instanceof Array) {
