@@ -50,7 +50,7 @@ class RefrigeriosService {
     static async getBreakFastSecundaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 6, schoolId: school_id, serviceId:[2,16,34,38,39,42,46], statusBreakfast: false },
+                where: { sectionId: 6, schoolId: school_id, serviceId:[2,16,34,38,39,42,46,45], statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
