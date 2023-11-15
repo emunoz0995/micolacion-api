@@ -114,6 +114,9 @@ class ReportService {
         try {
             const result = await History.findAll({
                 where: { schoolId: school_id},
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'history_seccion',
