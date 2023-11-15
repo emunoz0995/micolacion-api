@@ -113,7 +113,6 @@ class RefrigeriosService {
             throw error;
         }
     }
-
 }
 
 module.exports = RefrigeriosService;

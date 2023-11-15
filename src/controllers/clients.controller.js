@@ -74,8 +74,15 @@ const updateClient = async (req, res) => {
     try {
         const { id } = req.params;
         const client = req.body;
-        const result = await ClientService.updateClient(client, id );
-        res.status(200).json({message: 'resource updated successfully'});
+        const result = await ClientService.updateClient(client, { where: {id} });
+        if(result){
+            const representante = await ClientService.updateRepresentative(client, { where: { id: client.representativeId }});
+            if (representante){
+                res.status(200).json({message: 'resource updated successfully'});
+            } else {
+                res.status(400).json({message: 'error al actualizar representante'});
+            }
+        }       
     } catch (error) {
         res.status(400).json(error.message);
     }

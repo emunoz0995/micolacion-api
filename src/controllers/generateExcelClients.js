@@ -79,19 +79,19 @@ const generateExcelClients = async (req, res) => {
                 size: 12,
             },
         });
-        //TITULOS
-        ws.cell(1, 1, 1, 7, true)
-            .string("REPORTE MI COLACION")
-            .style(titleStyle);
-        ws.cell(2, 1, 2, 7, true)
-            .string("RUC:0491532939001")
-            .style(titleStyle);
-        ws.cell(3, 1, 3, 7, true)
-            .string("TELEFONOS: 062245069 - 2245258")
-            .style(titleStyle);
-        ws.cell(4, 1, 4, 7, true)
-            .string("DIRECCION: PANAMERICANA SUR Y LAS CLAUDIAS")
-            .style(titleStyle);
+         //TITULOS
+         ws.cell(1, 1, 1, 7, true)
+         .string("REPORTE MI COLACION")
+         .style(titleStyle);
+     ws.cell(2, 1, 2, 7, true)
+         .string("RUC:1707748776001")
+         .style(titleStyle);
+     ws.cell(3, 1, 3, 7, true)
+         .string("TELEFONOS: 0968580445")
+         .style(titleStyle);
+     ws.cell(4, 1, 4, 7, true)
+         .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
+         .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
             .string("FECHA: " + formatDateToLocal(today))
             .style(titleStyle);

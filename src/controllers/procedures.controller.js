@@ -1,4 +1,5 @@
 const RefrigeriosProcessService = require('../services/procedures.services');
+const Clients = require('../models/clients.model');
 const Utils = require('../utils/Utils');
 
 
@@ -111,6 +112,16 @@ const paidService = async (req, res, next) => {
     }
 }
 
+const getCountBreakFastProcesados = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const countProcess = await Clients.count({where: { statusBreakfast: true, schoolId: school_id }});
+        res.status(200).json(countProcess);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 
 
 module.exports = {
@@ -123,5 +134,6 @@ module.exports = {
     revertLunch,
     registerExtra,
     renewService,
+    getCountBreakFastProcesados,
     startDay
 }

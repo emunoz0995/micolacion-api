@@ -63,13 +63,13 @@ const generateExcelMenor5 = async (req, res) => {
             .string("REPORTE MI COLACION")
             .style(titleStyle);
         ws.cell(2, 1, 2, 7, true)
-            .string("RUC:0491532939001")
+            .string("RUC:1707748776001")
             .style(titleStyle);
         ws.cell(3, 1, 3, 7, true)
-            .string("TELEFONOS: 062245069 - 2245258")
+            .string("TELEFONOS: 0968580445")
             .style(titleStyle);
         ws.cell(4, 1, 4, 7, true)
-            .string("DIRECCION: PANAMERICANA SUR Y LAS CLAUDIAS")
+            .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
             .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
             .string("FECHA: " + formatDateToLocal(today))

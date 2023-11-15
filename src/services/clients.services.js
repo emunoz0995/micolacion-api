@@ -15,11 +15,11 @@ class ClientService {
                 include: [{
                     model: Representative,
                     as: 'cliente_representante',
-                },{
+                }, {
                     model: Section,
                     as: 'cliente_seccion',
                     attributes: ['name'],
-                },{
+                }, {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
@@ -38,7 +38,7 @@ class ClientService {
                 include: [{
                     model: Representative,
                     as: 'cliente_representante',
-                },{
+                }, {
                     model: Section,
                     as: 'cliente_seccion',
                     attributes: ['name'],
@@ -125,23 +125,26 @@ class ClientService {
 
     static async updateClient(client, id) {
         try {
-            const { names, cedulaRepresentante, email,
-                adress, telefon, cedulaCliente, firstName,lastName, 
+            const { cedulaCliente, firstName, lastName,
                 sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
 
-            const result = await Clients.findOne({ where:{id}});
-            if(result){
-                result.update({cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active})
-            }               
-                
-            const representante = await Representative.findOne({ where: { id: result.dataValues.representativeId } });
-            if (representante) {
-                representante.update({ names, cedulaRepresentante, email, adress, telefon })
-            }
+            const result = await Clients.update({cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active}, id);
 
             return result;
         } catch (error) {
             throw error;
+        }
+    }
+
+    static async updateRepresentative(client, id) {
+        try {
+            const { names, cedulaRepresentante, email,
+                adress, telefon} = client;
+
+            const result = await Representative.update({names, cedulaRepresentante, email, adress, telefon},id);       
+            return result;
+        } catch (error) {
+            throw error;  
         }
     }
 
