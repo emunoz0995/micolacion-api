@@ -122,6 +122,16 @@ const getCountBreakFastProcesados = async (req, res) => {
     }
 }
 
+const getCountLuchProcesados = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const countProcess = await Clients.count({where: { statusLunch: true, schoolId: school_id }});
+        res.status(200).json(countProcess);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 
 
 module.exports = {
@@ -135,5 +145,6 @@ module.exports = {
     registerExtra,
     renewService,
     getCountBreakFastProcesados,
+    getCountLuchProcesados,
     startDay
 }

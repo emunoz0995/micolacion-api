@@ -1,4 +1,5 @@
 const AlmuerzosService = require('../../services/lcv/almuerzos.services');
+const Clients = require('../../models/clients.model');
 const Utils = require('../../utils/Utils');
 
 const getLunchBm = async (req, res) => {
@@ -59,7 +60,8 @@ const getLunchProcesados = async (req, res) => {
     try {
         const school_id = Utils.decode(req.params.school_id);
         const result = await AlmuerzosService.getLunchProcesados(school_id);
-        res.status(200).json(result);
+        const countProcess = await Clients.count({where: { statusLunch: true, schoolId: school_id }});
+        res.status(200).json({result, countProcess});
     } catch (error) {
         res.status(400).json(error.message)
     }
