@@ -150,14 +150,22 @@ class RefrigeriosProcessService {
 
 
     static async renewService(ci, data) {
+        console.log(data)
         const { totalBreakfast, totalLunch } = data;
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
-                result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
+                if(!data.totalBreakfast){
+                    result.update({ totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
+                }else if(!data.totalLunch){
+                    result.update({ totalBreakfast, breakfastConsumed: 0, lunchesConsumed: 0 })
+                }else{
+                    result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
+                }
             }
             return result;
         } catch (error) {
+            console.log(error)
             throw error;
         }
     }

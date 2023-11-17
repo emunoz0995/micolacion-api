@@ -8,7 +8,7 @@ class xmlMiddleware {
         try {
             const ci = req.params.client_ci;
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
-            if (result.dataValues) {
+            if (result) {
                 const { cedulaCliente, firstName,
                     lastName, sectionId, representativeId,
                     schoolId, serviceId, totalBreakfast, totalLunch,
