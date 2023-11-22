@@ -9,7 +9,7 @@ class historyMiddleware {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 const { cedulaCliente, firstName,
-                    lastName, sectionId, representativeId, schoolId, paidService } = result.dataValues;
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast,totalLunch, paidService } = result.dataValues;
                 const breakfastConsumed = 1;
                 if (schoolId === 1) {
                     await History.create({
@@ -18,7 +18,10 @@ class historyMiddleware {
                         sectionId,
                         representativeId,
                         schoolId,
+                        principalService:serviceId, 
                         serviceId: 52,
+                        totalBreakfast,
+                        totalLunch,
                         breakfastConsumed,
                         paidService,
                     }
@@ -30,7 +33,10 @@ class historyMiddleware {
                         sectionId,
                         representativeId,
                         schoolId,
+                        principalService:serviceId, 
                         serviceId: 55,
+                        totalBreakfast,
+                        totalLunch,
                         breakfastConsumed,
                         paidService,
                     }

@@ -21,8 +21,13 @@ class FacturationService {
                     attributes: {
                         exclude: ['createdAt', 'updatedAt'],
                     }
-
-                }, {
+                },{
+                    model: Services,
+                    as: 'history_servicioPrincipal',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt'],
+                    }
+                },{
                     model: Representative,
                     as: 'history_representante',
                 }]

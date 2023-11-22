@@ -28,7 +28,7 @@ class RefrigeriosService {
     static async getBreakFastBE(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:[1,2], serviceId:[35,37], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId:[1,2], serviceId:[35,37,61], schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],

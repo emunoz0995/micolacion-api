@@ -39,10 +39,25 @@ const History = db.define('history', {
         allowNull: false,
         field:"codigo_colegio",
     }, 
+    principalService: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field:"servicio_principal",
+    },
     serviceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         field:"codigo_servicio",
+    },
+    totalBreakfast: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        field:"total_desayunos",
+    },
+    totalLunch: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        field:"total_almuerzos",
     },
     breakfastConsumed: {
         type: DataTypes.INTEGER,

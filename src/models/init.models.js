@@ -28,10 +28,13 @@ const initModels = () => {
   History.belongsTo(Representative,{ as: "history_representante", foreignKey: "codigo_representante"});
   Representative.hasMany(History, { as: "representante_history", foreignKey: "codigo_representante"}); 
   History.belongsTo(Services,{ as: "history_servicio", foreignKey: "codigo_servicio"});
-  Services.hasMany(History, { as: "servicio_history", foreignKey: "codigo_servicio"}); 
+  Services.hasMany(History, { as: "servicio_history", foreignKey: "codigo_servicio"});
+
+  History.belongsTo(Services,{ as: "history_servicioPrincipal", foreignKey: "servicio_principal"});
+  Services.hasMany(History, { as: "servicioPrincipalhistory", foreignKey: "servicio_principal"}); 
+  
   History.belongsTo(Schools,{ as: "history_colegio", foreignKey: "codigo_colegio"});
   Schools.hasMany(History, { as: "colegio_history", foreignKey: "codigo_colegio"});
-  
   XML.belongsTo(Section,{ as: "XML_seccion", foreignKey: "codigo_seccion"});
   Section.hasMany(XML, { as: "seccion_XML", foreignKey: "codigo_seccion"}); 
   XML.belongsTo(Representative,{ as: "XML_representante", foreignKey: "codigo_representante"});
