@@ -88,7 +88,7 @@ const updateClient = async (req, res) => {
         const client = req.body;
         const result = await ClientService.updateClient(client.data, { where: { id } });
         const items = await StudentServiceService.updateServices(id, client.items)
-        const representante = await RepresentativeService.updateRepresentative(client, { where: { id: client.representativeId } });
+        const representante = await RepresentativeService.updateRepresentative(client.data, { where: { id: client.data?.representativeId } });
         res.status(200).json({ message: 'resource updated successfully' });
 
     } catch (error) {
