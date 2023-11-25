@@ -2,6 +2,7 @@ const Clients = require('../models/clients.model');
 const Section = require('../models/sections.model');
 const Services = require('../models/services.model')
 const Representative = require('../models/representative.model');
+const StudentServices = require('../models/studentServices.model');
 const Utils = require('../utils/Utils');
 
 class ClientService {
@@ -46,7 +47,7 @@ class ClientService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                }]
+                } ]
             });
             return result;
         } catch (error) {
@@ -54,40 +55,14 @@ class ClientService {
         }
     }
 
-    static async getRepresentante(id) {
+    static async createClient(representanteid, client) {
         try {
-            const result = await Representative.findOne({
-                where: { id }
-            });
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    static async createClient(client) {
-        try {
-            const { names, cedulaRepresentante, email,
-                adress, telefon, cedulaCliente, firstName,
-                lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
+            const { cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
             const schoolId = Utils.decode(client.schoolId);
-            const searchRepresentante = await Representative.findOne({ where: { cedulaRepresentante } });
-
-            if (searchRepresentante) {
-                const result = await Clients.create({
-                    cedulaCliente, firstName,
-                    lastName, sectionId, representativeId: searchRepresentante.id, schoolId, serviceId, totalBreakfast, totalLunch, active
-                });
-                return result;
-            } else {
-                await Representative.create({ names, cedulaRepresentante, email, adress, telefon });
-                const utimateRegister = await Representative.findOne({ order: [['createdAt', 'DESC']] });
-                const result = await Clients.create({
-                    cedulaCliente, firstName,
-                    lastName, sectionId, representativeId: utimateRegister.id, schoolId, serviceId, totalBreakfast, totalLunch, active
-                });
-                return result;
-            }
+            const result = await Clients.create({
+                cedulaCliente, firstName, lastName, sectionId, representativeId: representanteid, schoolId, serviceId, totalBreakfast, totalLunch, active
+            });
+            return result;
         } catch (error) {
             throw error;
 
@@ -125,26 +100,11 @@ class ClientService {
 
     static async updateClient(client, id) {
         try {
-            const { cedulaCliente, firstName, lastName,
-                sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
-
-            const result = await Clients.update({cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active}, id);
-
+            const { cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
+            const result = await Clients.update({ cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active }, id);
             return result;
         } catch (error) {
             throw error;
-        }
-    }
-
-    static async updateRepresentative(client, id) {
-        try {
-            const { names, cedulaRepresentante, email,
-                adress, telefon} = client;
-
-            const result = await Representative.update({names, cedulaRepresentante, email, adress, telefon},id);       
-            return result;
-        } catch (error) {
-            throw error;  
         }
     }
 

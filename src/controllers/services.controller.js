@@ -1,4 +1,5 @@
 const ServicesService = require('../services/service.services');
+const StudentServiceService = require('../services/studentServices.services');
 const Utils = require('../utils/Utils');
 
 const getAllServices = async (req, res) => {
@@ -74,6 +75,19 @@ const deleteService = async (req, res) => {
     }
 }
 
+const deleteServiceByStudent = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await StudentServiceService.deleteServiceByStudent({
+            where: { id }
+        });
+        res.status(200).json({message:'resource deleted successfully'})
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
+
 module.exports = {
     getAllServices,
     getServicesBySchool,
@@ -82,5 +96,6 @@ module.exports = {
     createService,
     updateService,
     deleteService,
+    deleteServiceByStudent
     
 }

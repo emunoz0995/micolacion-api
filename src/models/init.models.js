@@ -7,6 +7,7 @@ const Schools = require('./schools.model');
 const Section = require('./sections.model');
 const History = require('./historical.model'); 
 const XML = require('./generateXML.model');
+const StudentServices = require('./studentServices.model');
 
 
 const initModels = () => {
@@ -32,6 +33,10 @@ const initModels = () => {
 
   History.belongsTo(Services,{ as: "history_servicioPrincipal", foreignKey: "servicio_principal"});
   Services.hasMany(History, { as: "servicioPrincipalhistory", foreignKey: "servicio_principal"}); 
+
+  StudentServices.belongsTo(Client,{as:'cliente',foreignKey:'client_id'});
+  StudentServices.belongsTo(Services,{as:'servicio', foreignKey:'service_id'});
+  Client.hasMany(StudentServices, {as:'client_studendtService', foreignKey:'client_id'})
   
   History.belongsTo(Schools,{ as: "history_colegio", foreignKey: "codigo_colegio"});
   Schools.hasMany(History, { as: "colegio_history", foreignKey: "codigo_colegio"});
