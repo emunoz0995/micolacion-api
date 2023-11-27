@@ -1,4 +1,4 @@
-const AditionalService = require('../../services/lcv/adicionales.services');
+const AditionalService = require('../../services/cervantes/adicionales.services');
 const StudentServices = require('../../models/studentServices.model');
 const Utils = require('../../utils/Utils');
 
