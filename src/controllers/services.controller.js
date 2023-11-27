@@ -21,6 +21,16 @@ const getServicesBySchool = async (req, res) => {
     }
 }
 
+const getAditionalServicesBySchool = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const result = await ServicesService.getAditionalServicesBySchool(school_id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 const getServicesExtras = async (req, res) => {
     try {
         const result = await ServicesService.getServicesExtras();(result)
@@ -91,6 +101,7 @@ const deleteServiceByStudent = async (req, res) => {
 module.exports = {
     getAllServices,
     getServicesBySchool,
+    getAditionalServicesBySchool,
     getServicesExtras,
     getService,
     createService,

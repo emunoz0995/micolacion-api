@@ -55,7 +55,6 @@ class RepresentativeService {
             const result = await Representative.update({ names, cedulaRepresentante, email, adress, telefon }, id);
             return result;
         } catch (error) {
-            console.log(error)
             throw error;
         }
     }

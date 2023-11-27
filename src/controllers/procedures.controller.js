@@ -1,5 +1,6 @@
 const RefrigeriosProcessService = require('../services/procedures.services');
 const Clients = require('../models/clients.model');
+const StudentServices = require('../models/studentServices.model');
 const Utils = require('../utils/Utils');
 
 
@@ -59,6 +60,26 @@ const revertLunch = async (req, res) => {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.revertLunch(ci);
         res.status(200).json({message: 'Lunch revert successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+} 
+
+const decrementAdicional = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await RefrigeriosProcessService.decrementAdicional(id);
+        res.status(200).json({message: 'Adicional delivered successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
+const revertAdicional = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await RefrigeriosProcessService.revertAdicional(id);
+        res.status(200).json({message: 'Adicional revert successfully'});
     } catch (error) {
         res.status(400).json(error.message);
     }
@@ -132,6 +153,16 @@ const getCountLuchProcesados = async (req, res) => {
     }
 }
 
+const getCountAdicionalProcesados = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const countProcess = await StudentServices.count({where: { statusAditional: true, schoolId: school_id }});
+        res.status(200).json(countProcess);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 
 
 module.exports = {
@@ -145,6 +176,9 @@ module.exports = {
     registerExtra,
     renewService,
     getCountBreakFastProcesados,
+    getCountAdicionalProcesados,
     getCountLuchProcesados,
-    startDay
+    startDay,
+    decrementAdicional,
+    revertAdicional
 }

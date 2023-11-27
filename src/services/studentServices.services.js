@@ -16,17 +16,17 @@ class StudentServiceService {
             });
             return result;
         } catch (error) {
-            console.log(error)
             throw error;
         }
     }
 
-    static async createServices(id, items) {
+    static async createServices(id, schoolId, items) {
         try {
             items.forEach(item => {
                 const result = StudentServices.create({
                     clientId: id,
                     serviceId: item.serviceId,
+                    schoolId: schoolId,
                     total: item.total
                 });
                 return result;
@@ -36,7 +36,7 @@ class StudentServiceService {
         }
     }
 
-    static async updateServices(id, items) {
+    static async updateServices(id, schoolId, items) {
         try {
             const serviciosClienteExistente = await StudentServices.findAll({ where: { clientId: id } });
             const serviciosClienteNuevos = items.filter((nuevoServicio) => {
@@ -51,6 +51,7 @@ class StudentServiceService {
                 const result = StudentServices.create({
                     clientId: id,
                     serviceId: item.serviceId,
+                    schoolId: schoolId,
                     total: item.total
                 });
                 return result;

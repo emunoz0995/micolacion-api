@@ -32,6 +32,26 @@ class ServicesService {
         }
     }
 
+    static async getAditionalServicesBySchool(school_id) {
+        try {
+            if (school_id === 1) {
+                const result = await Services.findAll({
+                    where: { isLcv: true, isAditional: true },
+                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
+                });
+                return result;
+            } else if (school_id === 2) {
+                const result = await Services.findAll({
+                    where: { isCervantes: true, isAditional: true},
+                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
+                });
+                return result;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async getServicesExtras() {
         try {
             const result = await Services.findAll({

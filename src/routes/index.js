@@ -11,6 +11,7 @@ const lunchCervantesRoutes = require('./cervantes/almuerzos.routes');
 const proceduresRoutes = require('./procedures.routes');
 const reportsRoutes = require('./reports.routes');
 const facturationRoutes = require('./facturation.routes');
+const adicionalServivesLcv = require('./lcv/adicionales.routes');
 // const orderRoutes = require('./order.routes')
 
 const routerApi = (app) => {
@@ -27,7 +28,8 @@ const routerApi = (app) => {
     app.use("/api/refrigerios_cervantes", breakCervantesRoutes);
     app.use("/api/almuerzos_cervantes",lunchCervantesRoutes)
     app.use("/api/procedures", proceduresRoutes);
-    app.use("/api/facturations", facturationRoutes)
+    app.use("/api/facturations", facturationRoutes);
+    app.use("/api/aditional_lcv", adicionalServivesLcv)
     
   };
   

@@ -31,12 +31,12 @@ const createClient = async (req, res) => {
         const searchRepresentante = await RepresentativeService.getRepresentativeByCI(client.data.cedulaRepresentante)
         if (searchRepresentante) {
             const result = await ClientService.createClient(searchRepresentante.id, client.data);
-            const items = await StudentServiceService.createServices(result.id, client.items)
+            const items = await StudentServiceService.createServices(result.id, result.schoolId, client.items)
             res.status(201).json({ message: 'resource created successfully' });
         } else {
             const representante = await RepresentativeService.createRepresentante(client.data);
             const result = await ClientService.createClient(representante.id, client.data);
-            const items = await StudentServiceService.createServices(result.id, client.items)
+            const items = await StudentServiceService.createServices(result.id, result.schoolId, client.items)
             res.status(201).json({ message: 'resource created successfully' });
         }
 
@@ -87,7 +87,7 @@ const updateClient = async (req, res) => {
         const { id } = req.params;
         const client = req.body;
         const result = await ClientService.updateClient(client.data, { where: { id } });
-        const items = await StudentServiceService.updateServices(id, client.items)
+        const items = await StudentServiceService.updateServices(id, client.data?.schoolId, client.items)
         const representante = await RepresentativeService.updateRepresentative(client.data, { where: { id: client.data?.representativeId } });
         res.status(200).json({ message: 'resource updated successfully' });
 

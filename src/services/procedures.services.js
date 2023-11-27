@@ -1,4 +1,5 @@
 const Clients = require('../models/clients.model');
+const StudentServices = require('../models/studentServices.model'); 
 const History = require('../models/historical.model');
 
 class RefrigeriosProcessService {
@@ -11,11 +12,10 @@ class RefrigeriosProcessService {
                 result.decrement('totalBreakfast', { by: 1 });
                 result.increment('breakfastConsumed', { by: 1 });
                 result.update({ statusBreakfast: true });
-                console.log(result.serviceId)
-                if (result.serviceId === 34 || 
-                    result.serviceId === 35 || 
-                    result.serviceId === 45 || 
-                    result.serviceId === 46 || 
+                if (result.serviceId === 34 ||
+                    result.serviceId === 35 ||
+                    result.serviceId === 45 ||
+                    result.serviceId === 46 ||
                     result.serviceId === 47) {
                     result.decrement('totalLunch', { by: 1 });
                     result.increment('lunchesConsumed', { by: 1 });
@@ -71,11 +71,10 @@ class RefrigeriosProcessService {
                 result.decrement('totalLunch', { by: 1 });
                 result.increment('lunchesConsumed', { by: 1 });
                 result.update({ statusLunch: true });
-                console.log(result.serviceId)
-                if (result.serviceId === 34 || 
-                    result.serviceId === 35 || 
-                    result.serviceId === 45 || 
-                    result.serviceId === 46 || 
+                if (result.serviceId === 34 ||
+                    result.serviceId === 35 ||
+                    result.serviceId === 45 ||
+                    result.serviceId === 46 ||
                     result.serviceId === 47) {
                     result.decrement('totalBreakfast', { by: 1 });
                     result.increment('breakfastConsumed', { by: 1 });
@@ -122,8 +121,34 @@ class RefrigeriosProcessService {
         }
     }
 
-    //Services
+    //ADICIONAL
+    static async decrementAdicional(id) {
+        try {
+            const result = await StudentServices.findOne({ where: { id } });
+            if (result) {
+                result.decrement('total', { by: 1 });
+                result.update({ statusAditional: true });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
 
+    static async revertAdicional(id) {
+        try {
+            const result = await StudentServices.findOne({ where: {id} });
+            if (result) {
+                result.increment('total', { by: 1 });
+                result.update({ statusAditional: false });
+            }
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //Services
     static async registerExtra(data) {
         const { cedulaCliente, serviceId } = data;
         try {
@@ -150,22 +175,20 @@ class RefrigeriosProcessService {
 
 
     static async renewService(ci, data) {
-        console.log(data)
         const { totalBreakfast, totalLunch } = data;
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
-                if(!data.totalBreakfast){
+                if (!data.totalBreakfast) {
                     result.update({ totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
-                }else if(!data.totalLunch){
+                } else if (!data.totalLunch) {
                     result.update({ totalBreakfast, breakfastConsumed: 0, lunchesConsumed: 0 })
-                }else{
+                } else {
                     result.update({ totalBreakfast, totalLunch, breakfastConsumed: 0, lunchesConsumed: 0 })
                 }
             }
             return result;
         } catch (error) {
-            console.log(error)
             throw error;
         }
     }
@@ -178,7 +201,6 @@ class RefrigeriosProcessService {
                 });
             return result;
         } catch (error) {
-            console.log(error)
             throw error;
         }
     }

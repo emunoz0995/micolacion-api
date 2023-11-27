@@ -24,7 +24,6 @@ const getServicesGenerateXML = async (req, res) => {
 const getServicesGenerateXMlByClient = async (req, res) => {
     try {
         const {client_ci} = req.params;
-        console.log(client_ci)
         const result = await FacturationService.getServicesGenerateXMlByClient(client_ci);
         res.status(200).json(result);
     } catch (error) {
