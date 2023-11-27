@@ -1,6 +1,7 @@
 const Clients = require('../models/clients.model');
-const StudentServices = require('../models/studentServices.model'); 
+const StudentServices = require('../models/studentServices.model');
 const History = require('../models/historical.model');
+const { where } = require('sequelize');
 
 class RefrigeriosProcessService {
 
@@ -137,7 +138,7 @@ class RefrigeriosProcessService {
 
     static async revertAdicional(id) {
         try {
-            const result = await StudentServices.findOne({ where: {id} });
+            const result = await StudentServices.findOne({ where: { id } });
             if (result) {
                 result.increment('total', { by: 1 });
                 result.update({ statusAditional: false });
@@ -199,6 +200,9 @@ class RefrigeriosProcessService {
                 {
                     where: { schoolId }
                 });
+            await StudentServices.update({ statusAditional: false }, {
+                where: { schoolId }
+            });
             return result;
         } catch (error) {
             throw error;
