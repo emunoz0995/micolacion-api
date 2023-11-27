@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { getAllSections,getSectionsBySchool,getSection, createSection, updateSection, deleteSection }  = require ('../controllers/sections.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
 
 const router = Router();
 

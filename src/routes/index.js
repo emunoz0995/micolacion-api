@@ -12,16 +12,17 @@ const proceduresRoutes = require('./procedures.routes');
 const reportsRoutes = require('./reports.routes');
 const facturationRoutes = require('./facturation.routes');
 const adicionalServivesLcv = require('./lcv/adicionales.routes');
+const authMiddleware = require('../middlewares/auth.middleware');
 // const orderRoutes = require('./order.routes')
 
 const routerApi = (app) => {
 
     app.use("/api/users", authRoutes);
-    app.use("/api/users", userRoutes);
+    app.use("/api/users",authMiddleware, userRoutes);
     app.use("/api/clients", clientRoutes);
-    app.use("/api/services", serviceRoutes)
-    app.use("/api/schools", schoolRoutes);
-    app.use("/api/sections", sectionRoutes);
+    app.use("/api/services",authMiddleware, serviceRoutes)
+    app.use("/api/schools", authMiddleware,schoolRoutes);
+    app.use("/api/sections",authMiddleware, sectionRoutes);
     app.use("/api/reports",reportsRoutes)
     app.use("/api/refrigerios_lcv", breakLcvRoutes);
     app.use("/api/almuerzos_lcv",lunchLcvRoutes)

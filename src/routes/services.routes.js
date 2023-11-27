@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const { getAllServices, getServicesBySchool, getServicesExtras,  getService, createService, 
         updateService, deleteService, deleteServiceByStudent, getAditionalServicesBySchool }  = require ('../controllers/services.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
 
 const router = Router();
 
