@@ -20,6 +20,22 @@ class StudentServiceService {
         }
     }
 
+    static async getAditionalServicesById(id) {
+        try {
+            const result = await StudentServices.findOne({
+                where: { id },
+                include: {
+                    model: Services,
+                    as: 'servicio',
+                    attributes: ['name'],
+                }
+            });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async createServices(id, schoolId, items) {
         try {
             items.forEach(item => {

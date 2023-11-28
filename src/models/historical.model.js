@@ -57,6 +57,11 @@ const History = db.define('history', {
     totalLunch: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+        field:"total_adicionales",
+    },
+    totalAditionals: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
         field:"total_almuerzos",
     },
     breakfastConsumed: {
@@ -68,6 +73,11 @@ const History = db.define('history', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         field:"almuerzos_consumidos",
+    },
+    aditionalConsumed: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        field:"adicionales_consumidos",
     },
     extrasConsumed: {
         type: DataTypes.INTEGER,

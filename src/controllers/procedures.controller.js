@@ -65,11 +65,12 @@ const revertLunch = async (req, res) => {
     }
 } 
 
-const decrementAdicional = async (req, res) => {
+const decrementAdicional = async (req, res, next) => {
     try {
         const id = req.params.id;
         const result = await RefrigeriosProcessService.decrementAdicional(id);
         res.status(200).json({message: 'Adicional delivered successfully'});
+        next();
     } catch (error) {
         res.status(400).json(error.message);
     }

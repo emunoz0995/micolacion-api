@@ -1,15 +1,15 @@
 const Clients = require('../models/clients.model');
+const StudentServiceService = require('../services/studentServices.services');
 const History = require('../models/historical.model');
 
 class historyMiddleware {
     static async historyBreakFast(req, res) {
         try {
-
             const ci = req.params.client_ci;
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 const { cedulaCliente, firstName,
-                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast,totalLunch, paidService } = result.dataValues;
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result.dataValues;
                 const breakfastConsumed = 1;
                 if (schoolId === 1) {
                     await History.create({
@@ -18,7 +18,7 @@ class historyMiddleware {
                         sectionId,
                         representativeId,
                         schoolId,
-                        principalService:serviceId, 
+                        principalService: serviceId,
                         serviceId: 52,
                         totalBreakfast,
                         totalLunch,
@@ -33,7 +33,7 @@ class historyMiddleware {
                         sectionId,
                         representativeId,
                         schoolId,
-                        principalService:serviceId, 
+                        principalService: serviceId,
                         serviceId: 55,
                         totalBreakfast,
                         totalLunch,
@@ -69,7 +69,7 @@ class historyMiddleware {
                             paidService
                         }
                     );
-                }else if (schoolId === 2) {
+                } else if (schoolId === 2) {
                     await History.create(
                         {
                             cedulaCliente,
@@ -113,6 +113,40 @@ class historyMiddleware {
             throw error;
         }
     };
+
+    static async historyAditionalService(req, res) {
+        try {
+            const cedulaCliente = req.body.clientCi
+            const id = req.params.id;
+            const result = await Clients.findOne({ where: { cedulaCliente } });
+            const aditional = await StudentServiceService.getAditionalServicesById(id);
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result;
+                const aditionalConsumed = 1;
+                await History.create({
+                    cedulaCliente,
+                    firstName,
+                    lastName,
+                    sectionId,
+                    representativeId,
+                    schoolId,
+                    principalService: serviceId,
+                    serviceId: aditional.serviceId,
+                    totalBreakfast,
+                    totalLunch,
+                    totalAditionals: aditional.total,
+                    aditionalConsumed,
+                    paidService,
+                }
+                );
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+
+
 }
 
 module.exports = historyMiddleware;
