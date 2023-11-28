@@ -4,7 +4,7 @@ class ServicesService {
     static async getAll() {
         try {
             const result = await Services.findAll({
-                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
+                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra","isAditional",'active']
             });
             return result;
         } catch (error) {
