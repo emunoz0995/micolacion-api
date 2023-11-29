@@ -35,11 +35,12 @@ const revertBreakFast = async (req, res) => {
     }
 }
 
-const decrementLunch = async (req, res) => {
+const decrementLunch = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.decrementLunch(ci);
         res.status(200).json({message: 'Lunch delivered successfully'});
+        next();
     } catch (error) {
         res.status(400).json(error.message);
     }
