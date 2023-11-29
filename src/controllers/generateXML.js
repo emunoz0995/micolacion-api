@@ -1,4 +1,5 @@
 const xmlbuilder = require('xmlbuilder');
+const Consecutivo = require('../models/consecutivo.model');
 
 const generateXML = async (req, res, next) => {
     try {
@@ -80,7 +81,7 @@ const generateXML = async (req, res, next) => {
         infoTributaria.ele('codDoc', '01');
         infoTributaria.ele('estab', '002');
         infoTributaria.ele('ptoEmi', '002');
-        infoTributaria.ele('secuencial', '');
+        infoTributaria.ele('secuencial', req.consecutivo);
         infoTributaria.ele('dirMatriz', 'KM 2 1 2 AV  SIMON BOLIVAR S N FRENTE A LA CASA DE LA SELE');
         infoTributaria.ele('agenteRetencion', '1');
         infoTributaria.ele('contribuyenteRimpe', 'CONTRIBUYENTE RÉGIMEN RIMPE');
@@ -117,6 +118,8 @@ const generateXML = async (req, res, next) => {
         campoAdicional.ele('campoAdicional', 'n/a').att("nombre", "Observacion");
 
         const xmlString = xml.end({ pretty: true });
+        // Incrementar el número consecutivo en la base de datos para la próxima vez
+        await Consecutivo.update({ valor: req.consecutivo + 1 }, { where: {} });
 
         res.setHeader('Content-Disposition', 'attachment; filename=Factura00002020.xml');
         res.setHeader('Content-Type', 'application/xml; charset=utf-8');

@@ -8,7 +8,7 @@ const Section = require('./sections.model');
 const History = require('./historical.model'); 
 const XML = require('./generateXML.model');
 const StudentServices = require('./studentServices.model');
-
+const Consecutivo = require('./consecutivo.model');
 
 const initModels = () => {
 
@@ -48,6 +48,8 @@ const initModels = () => {
   Services.hasMany(XML, { as: "servicio_XML", foreignKey: "codigo_servicio"}); 
   XML.belongsTo(Schools,{ as: "XML_colegio", foreignKey: "codigo_colegio"});
   Schools.hasMany(XML, { as: "colegio_XML", foreignKey: "codigo_colegio"});
+
+  Consecutivo
 
 };
 
