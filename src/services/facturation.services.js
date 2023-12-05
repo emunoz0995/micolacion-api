@@ -11,6 +11,9 @@ class FacturationService {
         try {
             const result = await History.findAll({
                 where: { schoolId: school_id, paidService: false },
+                order: [
+                    ['createdAt', 'DESC'],
+                ],
                 include: [{
                     model: Section,
                     as: 'history_seccion',

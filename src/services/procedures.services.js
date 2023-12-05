@@ -142,6 +142,12 @@ class RefrigeriosProcessService {
             if (result) {
                 result.increment('total', { by: 1 });
                 result.update({ statusAditional: false });
+                const findUltimateRegister = await History.findOne({
+                    order: [['createdAt', 'DESC']]
+                });
+                if (findUltimateRegister) {
+                    findUltimateRegister.destroy()
+                }
             }
             return result;
         } catch (error) {
