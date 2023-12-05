@@ -78,7 +78,7 @@ const generateXML = async (req, res, next) => {
         infoTributaria.ele('nombreComercial', 'MARIA DOLORES VALDIVIEZO GAETE');
         infoTributaria.ele('ruc', '1707748776001');
         infoTributaria.ele('claveAcceso', '2208202301170774877600120020020000047200003795115');
-        infoTributaria.ele('codDoc', '001');
+        infoTributaria.ele('codDoc', '01');
         infoTributaria.ele('estab', '002');
         infoTributaria.ele('ptoEmi', '003');
         infoTributaria.ele('secuencial', req.consecutivo);
