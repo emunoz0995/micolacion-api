@@ -33,8 +33,9 @@ class RefrigeriosProcessService {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
-                result.increment('breakfastConsumed', { by: 1 });
+                result.update({ breakfastConsumed: 1 });
                 result.update({ statusBreakfast: true })
+                result.update({ paidService: false });
             }
             return result;
         } catch (error) {
@@ -92,8 +93,9 @@ class RefrigeriosProcessService {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
-                result.increment('lunchesConsumed', { by: 1 });
-                result.update({ statusLunch: true })
+                result.update({lunchesConsumed: 1 });
+                result.update({ statusLunch: true });
+                result.update({ paidService: false });
             }
             return result;
         } catch (error) {
@@ -222,6 +224,20 @@ class RefrigeriosProcessService {
                 result.update({ paidService: true })
             }
             return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async paidServiceProcessed(ci) {
+        try {
+            const result = await History.findOne({ where: { cedulaCliente: ci },
+                order: [['createdAt', 'DESC']] });
+            if (result) {
+                result.update({ paidService: true })
+                await Clients.update({paidService: true}, {where: {cedulaCliente: ci}})
+                return result;
+            }
         } catch (error) {
             throw error;
         }

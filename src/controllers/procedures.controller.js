@@ -135,6 +135,19 @@ const paidService = async (req, res, next) => {
     }
 }
 
+const paidServiceProcessed = async (req, res, next) => {
+    try {
+        const ci = req.params.client_ci;
+        const result = await RefrigeriosProcessService.paidServiceProcessed(ci);
+        res.status(200).json({message: 'service paid successfully'});
+        setTimeout(() => {
+             next();
+        }, 1000); 
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 const getCountBreakFastProcesados = async (req, res) => {
     try {
         const school_id = Utils.decode(req.params.school_id);
@@ -172,6 +185,7 @@ module.exports = {
     incrementBreakFast,
     revertBreakFast,
     paidService,
+    paidServiceProcessed,
     decrementLunch,
     incrementLunch,
     revertLunch,

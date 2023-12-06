@@ -1,18 +1,18 @@
 const {Router} = require('express');
 const {decrementBreakFast, incrementBreakFast,revertBreakFast,
         decrementLunch,incrementLunch,revertLunch, registerExtra, renewService,
-        decrementAdicional,revertAdicional,paidService, startDay, 
+        decrementAdicional,revertAdicional,paidService, paidServiceProcessed, startDay, 
         getCountAdicionalProcesados, getCountBreakFastProcesados, getCountLuchProcesados}  = require ('../controllers/procedures.controller');
-const { historyBreakFast, historyLuch, historyAditionalService } = require('../middlewares/registerHistory.middleware')
-const { xmlRenewServices, xmlPaidServices } = require('../middlewares/registerXML.middleware');
+const { historyBreakFast, historyDecrementBreakFast, historyLuch, historyDecrementLuch, historyAditionalService } = require('../middlewares/registerHistory.middleware')
+const { xmlRenewServices, xmlPaidServices, xmlPaidServicesProcessed } = require('../middlewares/registerXML.middleware');
 
 const router = Router();
 
-router.put('/decrement_breackfast/:client_ci', decrementBreakFast, historyBreakFast);
+router.put('/decrement_breackfast/:client_ci', decrementBreakFast, historyDecrementBreakFast);
 router.put('/increment_breackfast/:client_ci', incrementBreakFast, historyBreakFast);
 router.put('/revert_breackfast/:client_ci', revertBreakFast);
 
-router.put('/decrement_lunch/:client_ci', decrementLunch, historyLuch);
+router.put('/decrement_lunch/:client_ci', decrementLunch, historyDecrementLuch);
 router.put('/increment_lunch/:client_ci', incrementLunch, historyLuch);
 router.put('/revert_lunch/:client_ci', revertLunch);
 
@@ -28,6 +28,7 @@ router.post('/register_serviceExtra', registerExtra);
 
 router.put('/renew_service/:client_ci', renewService, xmlRenewServices);
 router.put('/paid_service/:client_id', paidService, xmlPaidServices);
+router.put('/paidServiceFromProcessed/:client_ci', paidServiceProcessed, xmlPaidServicesProcessed);
 
 
 module.exports = router;

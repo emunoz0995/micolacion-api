@@ -53,6 +53,31 @@ class xmlMiddleware {
         }
     };
 
+    static async xmlPaidServicesProcessed(req, res) {
+        try {
+            const ci = req.params.client_ci;
+            const result = await History.findOne({ where: { cedulaCliente: ci },
+                order: [['createdAt', 'DESC']] });
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId,
+                    schoolId, serviceId, breakfastConsumed, lunchesConsumed } = result;
+                await XML.create({
+                    cedulaCliente, firstName,
+                    lastName, sectionId, representativeId,
+                    schoolId, serviceId, breakfastConsumed,
+                    lunchesConsumed
+                });
+                const representante = await Representative.findOne({ where: { id: representativeId } });
+                if (representante) {
+                    representante.update({ generateXML: true })
+                }
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+
 }
 
 module.exports = xmlMiddleware;

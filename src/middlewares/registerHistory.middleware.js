@@ -48,6 +48,51 @@ class historyMiddleware {
         }
     };
 
+    static async historyDecrementBreakFast(req, res) {
+        try {
+            const ci = req.params.client_ci;
+            const result = await Clients.findOne({ where: { cedulaCliente: ci } });
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result.dataValues;
+                const breakfastConsumed = 1;
+                if (schoolId === 1) {
+                    await History.create({
+                        cedulaCliente,
+                        firstName, lastName,
+                        sectionId,
+                        representativeId,
+                        schoolId,
+                        principalService: serviceId,
+                        serviceId: 52,
+                        totalBreakfast,
+                        totalLunch,
+                        breakfastConsumed,
+                        paidService: 1,
+                    }
+                    );
+                } else if (schoolId === 2) {
+                    await History.create({
+                        cedulaCliente,
+                        firstName, lastName,
+                        sectionId,
+                        representativeId,
+                        schoolId,
+                        principalService: serviceId,
+                        serviceId: 55,
+                        totalBreakfast,
+                        totalLunch,
+                        breakfastConsumed,
+                        paidService: 1,
+                    }
+                    );
+                }
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+
     static async historyLuch(req, res, next) {
         try {
             const ci = req.params.client_ci;
@@ -86,6 +131,54 @@ class historyMiddleware {
                             totalLunch,
                             lunchesConsumed,
                             paidService
+                        }
+                    );
+                }
+            }
+            next();
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    static async historyDecrementLuch(req, res, next) {
+        try {
+            const ci = req.params.client_ci;
+            const result = await Clients.findOne({ where: { cedulaCliente: ci } });
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId, serviceId,schoolId, totalBreakfast, totalLunch, paidService } = result;
+                const lunchesConsumed = 1;
+                if (schoolId === 1) {
+                    await History.create(
+                        {
+                            cedulaCliente,
+                            firstName, lastName,
+                            sectionId,
+                            representativeId,
+                            schoolId,
+                            principalService: serviceId,
+                            serviceId: 53,
+                            totalBreakfast,
+                            totalLunch,
+                            lunchesConsumed,
+                            paidService:1 ,
+                        }
+                    );
+                } else if (schoolId === 2) {
+                    await History.create(
+                        {
+                            cedulaCliente,
+                            firstName, lastName,
+                            sectionId,
+                            representativeId,
+                            schoolId,
+                            principalService: serviceId,
+                            serviceId: 56,
+                            totalBreakfast,
+                            totalLunch,
+                            lunchesConsumed,
+                            paidService: 1, 
                         }
                     );
                 }
