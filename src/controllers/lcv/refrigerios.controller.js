@@ -20,6 +20,17 @@ const getBreakFastBE = async (req, res) => {
         res.status(400).json(error.message)
     }
 }
+
+const getBreakFastBySection = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const section_id = req.params.section_id;
+        const result = await RefrigeriosService.getBreakFastBEBySection(school_id,section_id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 const getBreakFast2do3ro = async (req, res) => {
     try {
         const school_id = Utils.decode(req.params.school_id);
@@ -71,6 +82,7 @@ const getBreakFastProcesados = async (req, res) => {
 module.exports = {
     getBreakFastBm,
     getBreakFastBE,
+    getBreakFastBySection,
     getBreakFastBS,
     getBreakFast2do3ro,
     getBreakFastEventuales,

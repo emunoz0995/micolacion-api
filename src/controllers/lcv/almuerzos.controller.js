@@ -20,6 +20,16 @@ const getLunchBE = async (req, res) => {
         res.status(400).json(error.message)
     }
 }
+const getLunchBySection = async (req, res) => {
+    try {
+        const school_id = Utils.decode(req.params.school_id);
+        const section_id = req.params.section_id;
+        const result = await AlmuerzosService.getLunchBEBySection(school_id,section_id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
 const getLunchBS = async (req, res) => {
     try {
         const school_id = Utils.decode(req.params.school_id);
@@ -71,6 +81,7 @@ const getLunchProcesados = async (req, res) => {
 module.exports = {
     getLunchBm,
     getLunchBE,
+    getLunchBySection,
     getLunchBS,
     getLunch2do3ro,
     getLunchEventuales,
