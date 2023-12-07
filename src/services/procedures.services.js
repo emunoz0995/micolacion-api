@@ -159,12 +159,13 @@ class RefrigeriosProcessService {
 
     //Services
     static async registerExtra(data) {
-        const { cedulaCliente, serviceId } = data;
+        const cedulaCliente = data.cedulaCliente;
+        const service_id = data.serviceId;
         try {
             const result = await Clients.findOne({ where: { cedulaCliente } });
             if (result) {
                 const { cedulaCliente, firstName,
-                    lastName, sectionId, representativeId, schoolId } = result.dataValues;
+                    lastName, sectionId, representativeId, schoolId, serviceId } = result;
                 const extrasConsumed = 1;
                 await History.create({
                     cedulaCliente,
@@ -172,12 +173,14 @@ class RefrigeriosProcessService {
                     sectionId,
                     representativeId,
                     schoolId,
-                    serviceId,
+                    principalService: serviceId,
+                    serviceId: service_id,
                     extrasConsumed,
                 }
                 );
             }
         } catch (error) {
+            console.log(error)
             throw error;
         }
     }
