@@ -28,22 +28,26 @@ const generateXML = async (req, res, next) => {
         const invoice = req.body;
 
         const calculateSubTotal = () => {
-            return invoice.reduce((total, item) => total + item.quantity * item.price, 0);
+            const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
+            return subtotal.toFixed(2);
         };
-
+    
         const calculateIva = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             return (subtotal * 0.12).toFixed(2);
         };
-
+    
         const calculateTotal = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
-            const iva = (subtotal * 0.12).toFixed(2);
-            if (iva % 1 >= 0.05) {
-                return (parseInt(subtotal) + parseFloat(Math.ceil(iva))).toFixed(2);
-            } else {
-                return (parseInt(subtotal) + parseFloat(iva)).toFixed(2); 
-            }
+            const iva = (subtotal * 0.12);
+            const result = (subtotal + iva)
+            return result.toFixed(2);
+    
+            // if (iva % 1 >= 0.05) {
+            //     return (parseInt(subtotal) + parseFloat(Math.ceil(iva))).toFixed(2);
+            // } else {
+            //     return (parseInt(subtotal) + parseFloat(iva)).toFixed(2); 
+            // }
         };
 
         const informacionFactura = {
