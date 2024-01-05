@@ -6,15 +6,16 @@ const FacturationService = require('../services/facturation.services');
 const generateExcelServicesForCobrar = async (req, res) => {
     try {
         var today = new Date();
+        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const fechaFormateada = (date) =>{
+            const formattedDate = date.toLocaleDateString('es-ES', options);
+            return formattedDate;
+        } 
+
         var wb = new xl.Workbook({
             dateFormat: "dd/mm/yyyy hh:mm:ss",
         });
         var ws = wb.addWorksheet("ServiciosPorCobrar");
-
-        const formatDateToLocal = (date) => {
-            const formattedDate = new Date(date).toLocaleString();
-            return formattedDate;
-        }
 
         //RESPONSE PASSENGER FROM INGALA
 
@@ -75,7 +76,7 @@ const generateExcelServicesForCobrar = async (req, res) => {
          .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
          .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
-            .string("FECHA: " + formatDateToLocal(today))
+            .string("FECHA: " + fechaFormateada(today))
             .style(titleStyle);
         // CABECERA DETALLE 
         ws.cell(7, 1).string("Fecha y Hora ").style(headerLeftWrapStyle);
@@ -90,7 +91,7 @@ const generateExcelServicesForCobrar = async (req, res) => {
 
         //SHOW DATA
         for (var i = 0, l = result.length; i < l; i++) {
-            ws.cell(8 + i, 1).string(formatDateToLocal(result[i].createdAt));
+            ws.cell(8 + i, 1).string(fechaFormateada(result[i].createdAt));
             ws.cell(8 + i, 2).string(result[i].lastName + " " + result[i].firstName);
             ws.cell(8 + i, 3).string(result[i].history_servicioPrincipal?.name);
             ws.cell(8 + i, 4).string(result[i].history_servicio?.name);

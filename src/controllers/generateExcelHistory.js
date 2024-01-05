@@ -5,16 +5,17 @@ const ReportService = require("../services/reports.services");
 
 const generateExcelHistory = async (req, res) => {
     try {
-        var today = new Date();
+        var fechaActual = new Date();
+        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const fechaFormateada = (date) =>{
+            const formattedDate = date.toLocaleDateString('es-ES', options);
+            return formattedDate;
+        } 
+
         var wb = new xl.Workbook({
             dateFormat: "dd/mm/yyyy hh:mm:ss",
         });
         var ws = wb.addWorksheet("History");
-
-        const formatDateToLocal = (date) => {
-            const formattedDate = new Date(date).toLocaleString();
-            return formattedDate;
-        }
 
         //RESPONSE PASSENGER FROM INGALA
 
@@ -78,21 +79,21 @@ const generateExcelHistory = async (req, res) => {
                 size: 12,
             },
         });
-         //TITULOS
-         ws.cell(1, 1, 1, 7, true)
-         .string("REPORTE MI COLACION")
-         .style(titleStyle);
-     ws.cell(2, 1, 2, 7, true)
-         .string("RUC:1707748776001")
-         .style(titleStyle);
-     ws.cell(3, 1, 3, 7, true)
-         .string("TELEFONOS: 0968580445")
-         .style(titleStyle);
-     ws.cell(4, 1, 4, 7, true)
-         .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
-         .style(titleStyle);
+        //TITULOS
+        ws.cell(1, 1, 1, 7, true)
+            .string("REPORTE MI COLACION")
+            .style(titleStyle);
+        ws.cell(2, 1, 2, 7, true)
+            .string("RUC:1707748776001")
+            .style(titleStyle);
+        ws.cell(3, 1, 3, 7, true)
+            .string("TELEFONOS: 0968580445")
+            .style(titleStyle);
+        ws.cell(4, 1, 4, 7, true)
+            .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
+            .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
-            .string("FECHA: " + formatDateToLocal(today))
+            .string("FECHA: " + fechaFormateada(fechaActual))
             .style(titleStyle);
         // CABECERA DETALLE 
         ws.cell(7, 1).string("Fecha y Hora ").style(headerLeftWrapStyle);
@@ -104,13 +105,13 @@ const generateExcelHistory = async (req, res) => {
 
         //SHOW DATA
         for (var i = 0, l = result.length; i < l; i++) {
-            ws.cell(8 + i, 1).string(formatDateToLocal(result[i].dataValues.createdAt));
+            ws.cell(8 + i, 1).string(fechaFormateada(result[i].dataValues.createdAt));
             ws.cell(8 + i, 2).string(result[i].dataValues.lastName + " " + result[i].dataValues.firstName);
             ws.cell(8 + i, 3).string(result[i].dataValues.history_seccion?.name);
             ws.cell(8 + i, 4).string(result[i].dataValues.history_servicio?.name);
             ws.cell(8 + i, 5).string(result[i].dataValues.history_servicio?.price);
             ws.cell(8 + i, 6).string(result[i].dataValues?.breakfastConsumed);
-            ws.cell(8 + i, 6).string("1");           
+            ws.cell(8 + i, 6).string("1");
         }
         //GENERATE EXCEL
         if (result instanceof Array) {

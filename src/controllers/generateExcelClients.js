@@ -6,15 +6,15 @@ const ClientService = require("../services/clients.services");
 const generateExcelClients = async (req, res) => {
     try {
         var today = new Date();
+        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const fechaFormateada = (date) =>{
+            const formattedDate = date.toLocaleDateString('es-ES', options);
+            return formattedDate;
+        } 
         var wb = new xl.Workbook({
             dateFormat: "dd/mm/yyyy hh:mm:ss",
         });
         var ws = wb.addWorksheet("Clientes");
-
-        const formatDateToLocal = (date) => {
-            const formattedDate = new Date(date).toLocaleString();
-            return formattedDate;
-        }
 
         //RESPONSE PASSENGER FROM INGALA
 
@@ -93,7 +93,7 @@ const generateExcelClients = async (req, res) => {
          .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
          .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
-            .string("FECHA: " + formatDateToLocal(today))
+            .string("FECHA: " + fechaFormateada(today))
             .style(titleStyle);
         // CABECERA DETALLE 
         ws.cell(7, 1).string("Nombre Estudiante").style(headerLeftWrapStyle);

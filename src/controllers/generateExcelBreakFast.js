@@ -6,15 +6,15 @@ const ReportService = require("../services/reports.services");
 const generateExcelBreakFast = async (req, res) => {
     try {
         var today = new Date();
+        var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const fechaFormateada = (date) =>{
+            const formattedDate = date.toLocaleDateString('es-ES', options);
+            return formattedDate;
+        } 
         var wb = new xl.Workbook({
             dateFormat: "dd/mm/yyyy hh:mm:ss",
         });
         var ws = wb.addWorksheet("BreakFast");
-
-        const formatDateToLocal = (date) => {
-            const formattedDate = new Date(date).toLocaleString();
-            return formattedDate;
-        }
 
         //RESPONSE PASSENGER FROM INGALA
 
@@ -73,7 +73,7 @@ const generateExcelBreakFast = async (req, res) => {
          .string("DIRECCION: Av. Simón Bolívar Km 2 1/2")
          .style(titleStyle);
         ws.cell(5, 1, 5, 7, true)
-            .string("FECHA: " + formatDateToLocal(today))
+            .string("FECHA: " + fechaFormateada(today))
             .style(titleStyle);
         // CABECERA DETALLE 
         ws.cell(7, 1).string("Nombres").style(headerLeftWrapStyle);
