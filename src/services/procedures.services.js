@@ -180,7 +180,33 @@ class RefrigeriosProcessService {
                 );
             }
         } catch (error) {
-            console.log(error)
+            throw error;
+        }
+    }
+
+    static async registerAditional(data) {
+        const cedulaCliente = data.cedulaCliente;
+        const service_id = data.serviceId;
+        try {
+            const result = await Clients.findOne({ where: { cedulaCliente } });
+            if (result) {
+                const { cedulaCliente, firstName,
+                    lastName, sectionId, representativeId, schoolId, serviceId } = result;
+                const extrasConsumed = 1;
+                await History.create({
+                    cedulaCliente,
+                    firstName, lastName,
+                    sectionId,
+                    representativeId,
+                    schoolId,
+                    principalService: serviceId,
+                    serviceId: service_id,
+                    extrasConsumed,
+                    paidService: false
+                }
+                );
+            }
+        } catch (error) {
             throw error;
         }
     }

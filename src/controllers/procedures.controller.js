@@ -97,6 +97,16 @@ const registerExtra = async (req, res) => {
     }
 }
 
+const registerAditional = async (req, res) => {
+    try {
+        const data = req.body;
+        const result = await RefrigeriosProcessService.registerAditional(data);
+        res.status(200).json({message: 'extra register successfully'});
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
 
 const renewService = async (req, res, next) => {
     try {
@@ -190,6 +200,7 @@ module.exports = {
     incrementLunch,
     revertLunch,
     registerExtra,
+    registerAditional,
     renewService,
     getCountBreakFastProcesados,
     getCountAdicionalProcesados,
