@@ -24,9 +24,8 @@ class AditionalService {
                     attributes: ['name'],
                 }],
                 order: [
-                    ['lastName', 'ASC'],
+                    [{ model: Clients, as: 'cliente' }, 'lastName', 'ASC']
                 ],
-                
             });
             return result;
         } catch (error) {
