@@ -13,6 +13,9 @@ class AditionalService {
                     model: Clients,
                     as: 'cliente', 
                     attributes:['firstName','lastName'],
+                    order: [
+                        ['lastName', 'ASC'],
+                    ],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
