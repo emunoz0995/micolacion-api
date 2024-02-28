@@ -13,9 +13,6 @@ class AditionalService {
                     model: Clients,
                     as: 'cliente', 
                     attributes:['cedulaCliente','firstName','lastName'],
-                    order: [
-                        ['lastName', 'ASC'],
-                    ],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
@@ -26,6 +23,9 @@ class AditionalService {
                     as: 'servicio',
                     attributes: ['name'],
                 }],
+                order: [
+                    ['lastName', 'ASC'],
+                ],
                 
             });
             return result;
