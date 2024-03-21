@@ -1,6 +1,7 @@
 const authRoutes = require("./auth.routes");
 const userRoutes = require('./users.routes');
 const clientRoutes = require('./clients.routes');
+const representativeRoutes = require('./representative.routes');
 const serviceRoutes = require('./services.routes');
 const schoolRoutes = require('./schools.routes');
 const sectionRoutes = require('./sections.routes');
@@ -21,6 +22,7 @@ const routerApi = (app) => {
     app.use("/api/users", authRoutes);
     app.use("/api/users",authMiddleware, userRoutes);
     app.use("/api/clients", clientRoutes);
+    app.use("/api/representatives", representativeRoutes);
     app.use("/api/services",authMiddleware, serviceRoutes)
     app.use("/api/schools", authMiddleware,schoolRoutes);
     app.use("/api/sections",authMiddleware, sectionRoutes);

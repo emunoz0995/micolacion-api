@@ -51,8 +51,7 @@ class RepresentativeService {
 
     static async updateRepresentative(client, id) {
         try {
-            const { names, cedulaRepresentante, email, adress, telefon } = client;
-            const result = await Representative.update({ names, cedulaRepresentante, email, adress, telefon }, id);
+            const result = await Representative.update(client, id);
             return result;
         } catch (error) {
             throw error;

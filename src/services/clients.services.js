@@ -55,13 +55,14 @@ class ClientService {
         }
     }
 
-    static async createClient(representanteid, client) {
+    static async createClient(representante_id, client) {
         try {
-            const { cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
             const schoolId = Utils.decode(client.schoolId);
-            const result = await Clients.create({
-                cedulaCliente, firstName, lastName, sectionId, representativeId: representanteid, schoolId, serviceId, totalBreakfast, totalLunch, active
-            });
+            client.schoolId = schoolId
+            if(representante_id) {
+                client.representativeId = representante_id
+            }
+            const result = await Clients.create(client);
             return result;
         } catch (error) {
             throw error;
@@ -100,8 +101,7 @@ class ClientService {
 
     static async updateClient(client, id) {
         try {
-            const { cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active } = client;
-            const result = await Clients.update({ cedulaCliente, firstName, lastName, sectionId, serviceId, totalBreakfast, totalLunch, active }, id);
+            const result = await Clients.update(client, id);
             return result;
         } catch (error) {
             throw error;
