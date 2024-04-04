@@ -111,9 +111,9 @@ const generateXML = async (req, res, next) => {
             const impuesto = impuestos.ele('impuesto')
             impuesto.ele('codigo', '2')
             impuesto.ele('codigoPorcentaje', '2')
-            impuesto.ele('tarifa', '12.00')
+            impuesto.ele('tarifa', '15.00')
             impuesto.ele('baseImponible', item.price)
-            impuesto.ele('valor', ((item.quantity * item.price) * 0.12).toFixed(2));
+            impuesto.ele('valor', ((item.quantity * item.price) * 0.15).toFixed(2));
         });
 
         const infoAdicional = xml.ele('infoAdicional');
