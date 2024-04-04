@@ -55,13 +55,10 @@ class ClientService {
         }
     }
 
-    static async createClient(representante_id, client) {
+    static async createClient(client) {
         try {
             const schoolId = Utils.decode(client.schoolId);
             client.schoolId = schoolId
-            if(representante_id) {
-                client.representativeId = representante_id
-            }
             const result = await Clients.create(client);
             return result;
         } catch (error) {
