@@ -24,13 +24,13 @@ class FacturationService {
                     attributes: {
                         exclude: ['createdAt', 'updatedAt'],
                     }
-                },{
+                }, {
                     model: Services,
                     as: 'history_servicioPrincipal',
                     attributes: {
                         exclude: ['createdAt', 'updatedAt'],
                     }
-                },{
+                }, {
                     model: Representative,
                     as: 'history_representante',
                 }]
@@ -49,8 +49,8 @@ class FacturationService {
                     as: 'representante_cliente',
                     include: [{
                         model: Services,
-                    as: 'cliente_servicio',
-                    attributes:['name','price']
+                        as: 'cliente_servicio',
+                        attributes: ['name', 'price']
                     }],
                     where: { schoolId: school_id },
                 }],
@@ -129,6 +129,15 @@ class FacturationService {
                     attributes: ['name'],
                 }]
             });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deleteXMLClient(id) {
+        try {
+            const result = await XML.destroy(id);
             return result;
         } catch (error) {
             throw error;

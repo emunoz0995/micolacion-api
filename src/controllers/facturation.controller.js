@@ -1,4 +1,6 @@
+const { where } = require('sequelize');
 const FacturationService = require('../services/facturation.services');
+const RepresentativeService = require('../services/representatives.services');
 const Utils = require('../utils/Utils');
 
 const getServicesReceivable = async (req, res) => {
@@ -23,7 +25,7 @@ const getServicesGenerateXML = async (req, res) => {
 
 const getServicesGenerateXMlByClient = async (req, res) => {
     try {
-        const {client_ci} = req.params;
+        const { client_ci } = req.params;
         const result = await FacturationService.getServicesGenerateXMlByClient(client_ci);
         res.status(200).json(result);
     } catch (error) {
@@ -51,10 +53,24 @@ const getClient = async (req, res) => {
     }
 }
 
+const deleteXMLClient = async (req, res) => {
+    try {
+        const { client_ci } = req.params;
+        const updateRepresentative = await RepresentativeService.updateRepresentative({ generateXML: false }, { where: { id: client_ci } })
+        if (updateRepresentative) {
+            const result = await FacturationService.deleteXMLClient({ where: { representativeId: client_ci, isGenerateXML: false } });
+            res.status(200).json({ message: 'resource deleted successfully' })
+        }
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+
 module.exports = {
     getServicesReceivable,
     getServicesGenerateXML,
     getServicesGenerateXMlByClient,
     getHistory,
     getClient,
+    deleteXMLClient
 }

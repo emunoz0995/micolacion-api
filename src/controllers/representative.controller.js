@@ -1,5 +1,5 @@
 
-const RepresentativeService = require('../services/representatives.services');;
+const RepresentativeService = require('../services/representatives.services');
 const Utils = require('../utils/Utils');
 
 
