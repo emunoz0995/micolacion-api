@@ -29,7 +29,7 @@ const createClient = async (req, res) => {
     try {
         const client = req.body;
         if (client.data.representativeId) {
-            const result = await ClientService.createClient(client.data);
+            const result = await ClientService.createClient(client.data.representativeId, client.data);
             const items = await StudentServiceService.createServices(result.id, result.schoolId, client.items)
             res.status(201).json({ message: 'resource created successfully' });
         } else {
@@ -39,6 +39,7 @@ const createClient = async (req, res) => {
             res.status(201).json({ message: 'resource created successfully' });
         }
     } catch (error) {
+        console.log(error)
         res.status(400).json(error.message);
     }
 }
