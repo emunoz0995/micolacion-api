@@ -6,7 +6,7 @@ class AlmuerzosService {
     static async getLunchInicial(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 5, schoolId: school_id, serviceId:[16,30,31,34,42,45], statusLunch: false },
+                where: { sectionId: 5, schoolId: school_id, serviceId:[16,30,31,34,42,45,67,68,69], statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -28,7 +28,7 @@ class AlmuerzosService {
     static async getLunchPrimaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:2, schoolId: school_id, serviceId:[16,30,31,34,42,45], statusLunch: false },
+                where: { sectionId:2, schoolId: school_id, serviceId:[16,30,31,34,42,45,67,68,69], statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -50,7 +50,7 @@ class AlmuerzosService {
     static async getLunchSecundaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 6, schoolId: school_id,serviceId:[16,30,31,34,42,45,46], statusLunch: false },
+                where: { sectionId: 6, schoolId: school_id,serviceId:[16,30,31,34,42,45,46,67,68,69], statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],

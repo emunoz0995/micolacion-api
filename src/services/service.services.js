@@ -4,7 +4,10 @@ class ServicesService {
     static async getAll() {
         try {
             const result = await Services.findAll({
-                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra","isAditional",'active']
+                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra","isAditional",'active'],
+                order: [
+                    ['name', 'ASC'],
+                ],
             });
             return result;
         } catch (error) {
