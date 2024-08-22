@@ -6,7 +6,7 @@ class AlmuerzosService {
     static async getLunchBm(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 3, serviceId:[32,35,65], schoolId: school_id, statusLunch: false },
+                where: { sectionId: 3, schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -18,6 +18,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true}
                 }]
             });
             return result;
@@ -28,7 +29,7 @@ class AlmuerzosService {
     static async getLunchBE(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:[1,2], serviceId:[4,32,35,61,65], schoolId: school_id, statusLunch: false },
+                where: { sectionId:[1,2], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -40,6 +41,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true}
                 }]
             });
             return result;
@@ -51,7 +53,7 @@ class AlmuerzosService {
     static async getLunchBEBySection(school_id,sectionId) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId, serviceId:[4,32,35,61,65], schoolId: school_id, statusLunch: false },
+                where: { sectionId, schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -63,6 +65,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true}
                 }]
             });
             return result;
@@ -74,7 +77,7 @@ class AlmuerzosService {
     static async getLunchBS(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 4, serviceId:[33,47], schoolId: school_id, statusLunch: false },
+                where: { sectionId: 4,  schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -86,6 +89,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true}
                 }]
             });
             return result;
@@ -96,7 +100,7 @@ class AlmuerzosService {
     static async getLunch2do3ro(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 9, serviceId:[32,35,65], schoolId: school_id, statusLunch: false },
+                where: { sectionId: 9, schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -108,6 +112,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true}
                 }]
             });
             return result;

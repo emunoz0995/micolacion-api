@@ -6,7 +6,7 @@ class RefrigeriosService {
     static async getBreakFastBm(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 3, serviceId:[35,37,65], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId: 3, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -18,6 +18,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -28,7 +29,7 @@ class RefrigeriosService {
     static async getBreakFastBE(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:[1,2], serviceId:[35,37,61,65], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId:[1,2], schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -40,6 +41,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -51,7 +53,7 @@ class RefrigeriosService {
     static async getBreakFastBEBySection(school_id,sectionId) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId, serviceId:[35,37,61,65], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -63,6 +65,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -73,7 +76,7 @@ class RefrigeriosService {
     static async getBreakFast2do3ro(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:9, serviceId:[35,37,65], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId:9, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -85,6 +88,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -95,7 +99,7 @@ class RefrigeriosService {
     static async getBreakFastBS(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 4, serviceId:[37,47], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId: 4, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -107,6 +111,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;

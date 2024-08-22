@@ -6,7 +6,7 @@ class RefrigeriosService {
     static async getBreakFastInicial(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 5, schoolId: school_id, serviceId:[2,16,34,38,39,42,45,67,68,69], statusBreakfast: false },
+                where: { sectionId: 5, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -18,6 +18,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -28,7 +29,7 @@ class RefrigeriosService {
     static async getBreakFastPrimaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 2, schoolId: school_id, serviceId:[2,16,34,38,39,42,45,67,68,69], statusBreakfast: false },
+                where: { sectionId: 2, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -40,6 +41,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
                 }]
             });
             return result;
@@ -50,7 +52,7 @@ class RefrigeriosService {
     static async getBreakFastSecundaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 6, schoolId: school_id, serviceId:[2,4,16,34,38,39,42,46,45,67,68,69], statusBreakfast: false },
+                where: { sectionId: 6, schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -62,6 +64,8 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isBreakFast: true}
+
                 }]
             });
             return result;
