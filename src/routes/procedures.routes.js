@@ -2,7 +2,7 @@ const {Router} = require('express');
 const {decrementBreakFast, incrementBreakFast,revertBreakFast,
         decrementLunch,incrementLunch,revertLunch, registerExtra, registerAditional, renewService,
         decrementAdicional,revertAdicional,paidService, paidServiceProcessed, startDay, 
-        getCountAdicionalProcesados, getCountBreakFastProcesados, getCountLuchProcesados}  = require ('../controllers/procedures.controller');
+        getCountAdicionalProcesados, getCountBreakFastProcesados, getCountLuchProcesados, processPayAdittionalService}  = require ('../controllers/procedures.controller');
 const { historyBreakFast, historyDecrementBreakFast, historyLuch, historyDecrementLuch, historyAditionalService } = require('../middlewares/registerHistory.middleware')
 const { xmlRenewServices, xmlPaidServices, xmlPaidServicesProcessed } = require('../middlewares/registerXML.middleware');
 
@@ -26,6 +26,8 @@ router.get('/countAdicional_procesados/:school_id', getCountAdicionalProcesados)
 router.put('/start_day/:school_id', startDay);
 router.post('/register_serviceExtra', registerExtra);
 router.post('/register_serviceAditional', registerAditional);
+router.post('/processPayAdittionalService/:service_id', processPayAdittionalService);
+
 
 router.put('/renew_service/:client_ci', renewService, xmlRenewServices);
 router.put('/paid_service/:client_id', paidService, xmlPaidServices);
