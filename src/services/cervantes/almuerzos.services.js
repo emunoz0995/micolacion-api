@@ -75,7 +75,7 @@ class AlmuerzosService {
     static async getLunchEventuales(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: [2,5,6,7], schoolId: school_id, statusLunch: false },
+                where: { sectionId: [2,5,6,7], schoolId: school_id, serviceId: 48, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],

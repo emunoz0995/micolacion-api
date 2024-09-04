@@ -76,7 +76,7 @@ class RefrigeriosService {
     static async getBreakFastEventuales(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: [2,5,6,7], schoolId: school_id, serviceId: [48,30,31], statusBreakfast: false },
+                where: { sectionId: [2,5,6,7], schoolId: school_id, serviceId: 48, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -88,6 +88,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
+                    where: { isLunch: true, isBreakFast: false}
                 }]
             });
             return result;
