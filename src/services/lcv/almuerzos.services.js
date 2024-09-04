@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Clients = require('../../models/clients.model');
 const Section = require('../../models/sections.model');
 const Services = require('../../models/services.model')
