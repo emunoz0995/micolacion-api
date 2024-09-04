@@ -92,8 +92,8 @@ class AlmuerzosService {
                         [Op.or]: [
                           {
                             [Op.and]: [
-                              { isLunch: true },
-                              { isBreakFast: false }
+                              { isLunch: false },
+                              { isBreakFast: true }
                             ]
                           },
                           { noneService: true }
