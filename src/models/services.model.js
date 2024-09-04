@@ -45,6 +45,10 @@ const Services = db.define('services', {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    noneService: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
