@@ -88,7 +88,7 @@ class RefrigeriosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { isLunch: true, isBreakFast: false}
+                    where: { isLunch: true, isBreakFast: false, id:48}
                 }]
             });
             return result;

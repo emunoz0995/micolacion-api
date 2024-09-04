@@ -87,7 +87,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { isLunch: false, isBreakFast: true}
+                    where: { isLunch: false, isBreakFast: true, id:48}
                 }]
             });
             return result;
