@@ -87,17 +87,17 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { 
+                    where: {
                         [Op.or]: [
-                            { noneService: true },
-                            { 
-                                [Op.and]: [
-                                    { isLunch: true }, 
-                                    { isBreakFast: false }
-                                ]
-                            }
+                          {
+                            [Op.and]: [
+                              { isLunch: true },
+                              { isBreakFast: false }
+                            ]
+                          },
+                          { noneService: true }
                         ]
-                    }
+                      }
                 }]
             });
             return result;
