@@ -111,7 +111,7 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { statusBreakfast: true, schoolId: school_id },
-                attributes:['id','lastName','firstName','paidService',],
+                attributes:['id','lastName','firstName','paidService','totalBreakfast'],
                 order: [
                     ['lastName', 'ASC'],
                 ],

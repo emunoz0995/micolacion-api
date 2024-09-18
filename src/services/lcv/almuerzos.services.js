@@ -180,7 +180,7 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { statusLunch: true, schoolId: school_id },
-                attributes:['id','lastName','firstName','paidService',],
+                attributes:['id','lastName','firstName','paidService','totalLunch'],
                 order: [
                     ['lastName', 'ASC'],
                 ],
