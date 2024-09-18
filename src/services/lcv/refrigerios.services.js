@@ -179,6 +179,7 @@ class RefrigeriosService {
         try {
             const result = await Clients.findAll({
                 where: { statusBreakfast: true, schoolId: school_id },
+                attributes:['id','lastName','firstName','paidService',],
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -189,7 +190,7 @@ class RefrigeriosService {
                 }, {
                     model: Services,
                     as: 'cliente_servicio',
-                    attributes: ['name'],
+                    attributes: ['name','isBreakFast','noneService' ],
                 }]
             });
             return result;
