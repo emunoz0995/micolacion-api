@@ -12,7 +12,7 @@ class AditionalService {
                 include: [{
                     model: Clients,
                     as: 'cliente', 
-                    attributes:['firstName','lastName'],
+                    attributes:['firstName','lastName','cedulaCliente'],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
@@ -42,7 +42,7 @@ class AditionalService {
                 include: [{
                     model: Clients,
                     as: 'cliente', 
-                    attributes:['firstName','lastName'],
+                    attributes:['firstName','lastName','cedulaCliente'],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
@@ -69,7 +69,7 @@ class AditionalService {
                 include: [{
                     model: Clients,
                     as: 'cliente', 
-                    attributes:['firstName','lastName'],
+                    attributes:['firstName','lastName','cedulaCliente'],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
@@ -96,7 +96,7 @@ class AditionalService {
                 include: [{
                     model: Clients,
                     as: 'cliente', 
-                    attributes:['firstName','lastName'],
+                    attributes:['firstName','lastName','cedulaCliente'],
                     include: [{
                         model: Section,
                         as: 'cliente_seccion',
