@@ -8,7 +8,6 @@ const generateXML = async (req, res, next) => {
 
         const formatDateToLocal = (date) => {
             const formattedDate = moment.tz(date, "America/Guayaquil");
-            console.log('formattedDateIn', formattedDate)
             const day = formattedDate.date();
             const month = formattedDate.month() + 1; // Los meses empiezan desde 0 en moment.js también
             const year = formattedDate.year();
@@ -17,8 +16,6 @@ const generateXML = async (req, res, next) => {
         };
 
         const today = moment.tz("America/Guayaquil").format();
-        console.log(formatDateToLocal(today)); // Esto debería dar la fecha correcta en la hora local de Ecuador
-
         const opts = {
             version: "1.0",
             encoding: "UTF-8",
