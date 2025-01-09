@@ -6,13 +6,15 @@ const generateXML = async (req, res, next) => {
 
         const formatDateToLocal = (date) => {
             const formattedDate = new Date(date);
-            const dia = formattedDate.getDate().toString().padStart(2, '0');
-            const mes = (formattedDate.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
-            const anio = formattedDate.getFullYear();
-            return `${dia}/${mes}/${anio}`;
+            const day = formattedDate.getDate();
+            const month = formattedDate.getMonth() + 1; // Los meses empiezan desde 0
+            const year = formattedDate.getFullYear(); 
+            return `${day}/${month}/${year}`;
         }
 
         var today = new Date();
+
+        console.log(formatDateToLocal(today))
 
         const opts = {
             version: "1.0",
