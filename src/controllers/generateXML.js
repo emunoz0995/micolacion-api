@@ -8,9 +8,11 @@ const generateXML = async (req, res, next) => {
 
         const formatDateToLocal = (date) => {
             console.log('date', date)
-            const day = date.getDate();
-            const month = date.getMonth() + 1; // Los meses empiezan desde 0
-            const year = date.getFullYear();
+            const formattedDate = new Date(date);
+            console.log('formattedDate', formattedDate)
+            const day = formattedDate.getDate();
+            const month = formattedDate.getMonth() + 1; // Los meses empiezan desde 0
+            const year = formattedDate.getFullYear();
             return `${day}/${month}/${year}`;
         }
 
