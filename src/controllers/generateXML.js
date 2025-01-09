@@ -5,16 +5,18 @@ const generateXML = async (req, res, next) => {
     try {
 
         const formatDateToLocal = (date) => {
+            console.log('date', date)
             const formattedDate = new Date(date);
+            console.log('formattedDate', formattedDate)
             const day = formattedDate.getDate();
             const month = formattedDate.getMonth() + 1; // Los meses empiezan desde 0
-            const year = formattedDate.getFullYear(); 
+            const year = formattedDate.getFullYear();
             return `${day}/${month}/${year}`;
         }
 
         var today = new Date();
 
-        console.log(formatDateToLocal(today))
+        console.log('formatDateToLocal', formatDateToLocal(today))
 
         const opts = {
             version: "1.0",
@@ -33,18 +35,18 @@ const generateXML = async (req, res, next) => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             return subtotal.toFixed(2);
         };
-    
+
         const calculateIva = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             return (subtotal * 0.15).toFixed(2);
         };
-    
+
         const calculateTotal = () => {
             const subtotal = invoice.reduce((total, item) => total + item.quantity * item.price, 0);
             const iva = (subtotal * 0.15);
             const result = (subtotal + iva)
             return result.toFixed(2);
-    
+
             // if (iva % 1 >= 0.05) {
             //     return (parseInt(subtotal) + parseFloat(Math.ceil(iva))).toFixed(2);
             // } else {
