@@ -7,20 +7,17 @@ const generateXML = async (req, res, next) => {
     try {
 
         const formatDateToLocal = (date) => {
-            console.log('date', date)
-            const formattedDate = new Date(date);
-            console.log('formattedDate', formattedDate)
-            const day = formattedDate.getDate();
-            const month = formattedDate.getMonth() + 1; // Los meses empiezan desde 0
-            const year = formattedDate.getFullYear();
+            const formattedDate = moment.tz(date, "America/Guayaquil");
+            console.log('formattedDateIn', formattedDate)
+            const day = formattedDate.date();
+            const month = formattedDate.month() + 1; // Los meses empiezan desde 0 en moment.js también
+            const year = formattedDate.year();
+
             return `${day}/${month}/${year}`;
-        }
+        };
 
-
-        // Obtener la hora actual en la zona horaria de Ecuador
         const today = moment.tz("America/Guayaquil").format();
-
-        console.log('formatDateToLocalOut', formatDateToLocal(today))
+        console.log(formatDateToLocal(today)); // Esto debería dar la fecha correcta en la hora local de Ecuador
 
         const opts = {
             version: "1.0",
