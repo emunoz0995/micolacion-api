@@ -1,5 +1,7 @@
 const xmlbuilder = require('xmlbuilder');
 const Consecutivo = require('../models/consecutivo.model');
+const moment = require('moment-timezone');
+
 
 const generateXML = async (req, res, next) => {
     try {
@@ -15,6 +17,10 @@ const generateXML = async (req, res, next) => {
         }
 
         var today = new Date();
+
+        // Obtener la hora actual en la zona horaria de Ecuador
+        const date = moment.tz("America/Guayaquil").format();
+        console.log('moment', date);
 
         console.log('formatDateToLocal', formatDateToLocal(today))
 
