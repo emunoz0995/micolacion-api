@@ -16,13 +16,11 @@ const generateXML = async (req, res, next) => {
             return `${day}/${month}/${year}`;
         }
 
-        var today = new Date();
 
         // Obtener la hora actual en la zona horaria de Ecuador
-        const date = moment.tz("America/Guayaquil").format();
-        console.log('moment', date);
+        const today = moment.tz("America/Guayaquil").format();
 
-        console.log('formatDateToLocal', formatDateToLocal(today))
+        console.log('formatDateToLocalOut', formatDateToLocal(today))
 
         const opts = {
             version: "1.0",
