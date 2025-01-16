@@ -139,7 +139,7 @@ const paidService = async (req, res, next) => {
     try {
         const id = req.params.client_id;
         const result = await RefrigeriosProcessService.paidService(id);
-        res.status(200).json({ message: 'service paid successfully' });
+        res.status(200).json({ data: 'service paid successfully' });
         setTimeout(() => {
             next();
         }, 1000);
@@ -152,7 +152,7 @@ const paidServiceProcessed = async (req, res, next) => {
     try {
         const ci = req.params.client_ci;
         const result = await RefrigeriosProcessService.paidServiceProcessed(ci);
-        res.status(200).json({ message: 'service paid successfully' });
+        res.status(200).json({ data: 'service paid successfully' });
         setTimeout(() => {
             next();
         }, 1000);

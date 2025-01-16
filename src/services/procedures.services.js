@@ -95,7 +95,7 @@ class RefrigeriosProcessService {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
-                result.update({lunchesConsumed: 1 });
+                result.update({ lunchesConsumed: 1 });
                 result.update({ statusLunch: true });
                 result.update({ paidService: false });
             }
@@ -262,11 +262,13 @@ class RefrigeriosProcessService {
 
     static async paidServiceProcessed(ci) {
         try {
-            const result = await History.findOne({ where: { cedulaCliente: ci },
-                order: [['createdAt', 'DESC']] });
+            const result = await History.findOne({
+                where: { cedulaCliente: ci },
+                order: [['createdAt', 'DESC']]
+            });
             if (result) {
                 result.update({ paidService: true })
-                await Clients.update({paidService: true}, {where: {cedulaCliente: ci}})
+                await Clients.update({ paidService: true }, { where: { cedulaCliente: ci } })
                 return result;
             }
         } catch (error) {
