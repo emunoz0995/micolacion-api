@@ -124,7 +124,7 @@ class ReportService {
             const result = await History.findAll({
                 where: { 
                     schoolId: school_id,
-                    createdAt: { [Op.gte]: threeMonthsAgo }, // Filtra por los últimos 3 meses
+                    //createdAt: { [Op.gte]: threeMonthsAgo }, // Filtra por los últimos 3 meses
                 },
                 order: [
                     ['createdAt', 'DESC'],
