@@ -9,7 +9,7 @@ class ReportService {
     static async getReportGeneral(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, sectionId:[1,2,3,4,5,6,7] },
+                where: { schoolId: school_id, sectionId: [1, 2, 3, 4, 5, 6, 7] },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -18,7 +18,7 @@ class ReportService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                },{
+                }, {
                     model: Representative,
                     as: 'cliente_representante',
                 }]
@@ -32,14 +32,15 @@ class ReportService {
     static async getReportMenorFive(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, 
-                         sectionId:[1,2,3,4,5,6,7,9],
-                         serviceId: {[Op.ne]: 48},
-                         [Op.and]:[
-                           { totalBreakfast: { [Op.lte]: 5 }},
-                           { totalLunch: { [Op.lte]: 5 }},        
-                         ]
-                        },
+                where: {
+                    schoolId: school_id,
+                    sectionId: [1, 2, 3, 4, 5, 6, 7, 9],
+                    serviceId: { [Op.ne]: 48 },
+                    [Op.and]: [
+                        { totalBreakfast: { [Op.lte]: 5 } },
+                        { totalLunch: { [Op.lte]: 5 } },
+                    ]
+                },
                 order: [['lastName', 'ASC']],
                 include: [{
                     model: Section,
@@ -49,7 +50,7 @@ class ReportService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                },{
+                }, {
                     model: Representative,
                     as: 'cliente_representante',
                 }]
@@ -63,10 +64,11 @@ class ReportService {
     static async getReportBreakFast(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, 
-                         sectionId:[1,2,3,4,5,6,7],
-                         statusBreakfast: true
-                        },
+                where: {
+                    schoolId: school_id,
+                    sectionId: [1, 2, 3, 4, 5, 6, 7],
+                    statusBreakfast: true
+                },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -75,7 +77,7 @@ class ReportService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                },{
+                }, {
                     model: Representative,
                     as: 'cliente_representante',
                 }]
@@ -89,10 +91,11 @@ class ReportService {
     static async getReportLunches(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { schoolId: school_id, 
-                         sectionId:[1,2,3,4,5,6,7],
-                         statusLunch: true
-                        },
+                where: {
+                    schoolId: school_id,
+                    sectionId: [1, 2, 3, 4, 5, 6, 7],
+                    statusLunch: true
+                },
                 include: [{
                     model: Section,
                     as: 'cliente_seccion',
@@ -101,7 +104,7 @@ class ReportService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                },{
+                }, {
                     model: Representative,
                     as: 'cliente_representante',
                 }]
@@ -110,12 +113,19 @@ class ReportService {
         } catch (error) {
             throw error;
         }
-    }    
+    }
 
     static async getReportHistory(school_id) {
         try {
+            // Calcula la fecha de hace 3 meses
+            const threeMonthsAgo = new Date();
+            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
             const result = await History.findAll({
-                where: { schoolId: school_id},
+                where: { 
+                    schoolId: school_id,
+                    createdAt: { [Op.gte]: threeMonthsAgo }, // Filtra por los últimos 3 meses
+                },
                 order: [
                     ['createdAt', 'DESC'],
                 ],
@@ -127,9 +137,9 @@ class ReportService {
                     model: Services,
                     as: 'history_servicio',
                     attributes: {
-                        exclude: ['createdAt','updatedAt'],
-                    }        
-                },{
+                        exclude: ['createdAt', 'updatedAt'],
+                    }
+                }, {
                     model: Representative,
                     as: 'history_representante',
                 }]
@@ -138,12 +148,12 @@ class ReportService {
         } catch (error) {
             throw error;
         }
-    }    
+    }
 
     static async getReportHistoryByClient(client_ci) {
         try {
             const result = await History.findAll({
-                where: { cedulaCliente: client_ci},
+                where: { cedulaCliente: client_ci },
                 include: [{
                     model: Section,
                     as: 'history_seccion',
@@ -152,9 +162,9 @@ class ReportService {
                     model: Services,
                     as: 'history_servicio',
                     attributes: {
-                        exclude: ['createdAt','updatedAt'],
-                    }        
-                },{
+                        exclude: ['createdAt', 'updatedAt'],
+                    }
+                }, {
                     model: Representative,
                     as: 'history_representante',
                 }]
@@ -163,7 +173,7 @@ class ReportService {
         } catch (error) {
             throw error;
         }
-    }    
+    }
 }
 
 module.exports = ReportService;
