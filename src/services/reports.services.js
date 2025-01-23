@@ -119,7 +119,7 @@ class ReportService {
         try {
             // Calcula la fecha de hace 3 meses
             const threeMonthsAgo = new Date();
-            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 1);
 
             const result = await History.findAll({
                 where: { 
