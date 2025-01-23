@@ -50,7 +50,6 @@ class RefrigeriosProcessService {
                 result.increment('totalBreakfast', { by: 1 });
                 result.decrement('breakfastConsumed', { by: 1 });
                 result.update({ statusBreakfast: false })
-
                 // Encuentra el último registro en el historial para este cliente
                 const findUltimateRegister = await History.findOne({
                     where: { cedulaCliente: ci }, // Filtra por el cliente
@@ -112,13 +111,13 @@ class RefrigeriosProcessService {
                 result.increment('totalLunch', { by: 1 });
                 result.decrement('lunchesConsumed', { by: 1 });
                 result.update({ statusLunch: false });
-                const findUltimateRegister = await History.findOne({
-                    order: [['createdAt', 'DESC']]
+                 // Encuentra el último registro en el historial para este cliente
+                 const findUltimateRegister = await History.findOne({
+                    where: { cedulaCliente: ci }, // Filtra por el cliente
+                    order: [['createdAt', 'DESC']],
                 });
                 if (findUltimateRegister) {
-                    findUltimateRegister.destroy({
-                        where: { cedulaCliente: ci }
-                    })
+                    await findUltimateRegister.destroy();
                 }
             }
             return result;
@@ -147,11 +146,13 @@ class RefrigeriosProcessService {
             if (result) {
                 result.increment('total', { by: 1 });
                 result.update({ statusAditional: false });
-                const findUltimateRegister = await History.findOne({
-                    order: [['createdAt', 'DESC']]
+                 // Encuentra el último registro en el historial para este cliente
+                 const findUltimateRegister = await History.findOne({
+                    where: { cedulaCliente: ci }, // Filtra por el cliente
+                    order: [['createdAt', 'DESC']],
                 });
                 if (findUltimateRegister) {
-                    findUltimateRegister.destroy()
+                    await findUltimateRegister.destroy();
                 }
             }
             return result;
