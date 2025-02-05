@@ -111,35 +111,27 @@ class RefrigeriosService {
 
     static async getBreakFastProcesados(school_id) {
         try {
-            const result = await History.findAll({
-                where: {
-                    paidService: false,
-                    schoolId: school_id,
-                    createdAt: {
-                        [Sequelize.Op.gte]: Sequelize.fn('DATE', Sequelize.fn('NOW'))
-                    }
-                },
+            const result = await Clients.findAll({
+                where: { statusBreakfast: true, schoolId: school_id },
                 attributes: ['id', 'cedulaCliente', 'lastName', 'firstName', 'paidService', 'totalBreakfast'],
                 order: [
                     ['lastName', 'ASC'],
                 ],
                 include: [{
                     model: Section,
-                    as: 'history_seccion',
+                    as: 'cliente_seccion',
                     attributes: ['name'],
                 }, {
                     model: Services,
-                    as: 'history_servicio',
+                    as: 'cliente_servicio',
                     attributes: ['name', 'isBreakFast', 'noneService'],
                 }]
             });
             return result;
         } catch (error) {
-            console.log(error)
             throw error;
         }
     }
-
 }
 
 module.exports = RefrigeriosService;
