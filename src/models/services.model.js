@@ -29,6 +29,10 @@ const Services = db.define('services', {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    isDiscovery: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     isExtra: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

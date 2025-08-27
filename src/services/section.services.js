@@ -1,10 +1,11 @@
+const Schools = require('../models/schools.model');
 const Sections = require('../models/sections.model');
 
 class SectionsService {
     static async getAll() {
         try {
             const result = await Sections.findAll({
-                attributes: ['id', 'name', 'isLcv', 'isCervantes', 'active']
+                attributes: ['id', 'name', 'isLcv', 'isCervantes', 'isDiscovery', 'active']
             });
             return result;
         } catch (error) {
@@ -14,19 +15,13 @@ class SectionsService {
 
     static async getSectionsBySchool(school_id) {
         try {
-            if (school_id === 1) {
-                const result = await Sections.findAll({
-                    where: { isLcv: true },
-                    attributes: ['id', 'name', 'isLcv', 'isCervantes', 'active']
-                });
-                return result;
-            } else if (school_id === 2) {
-                const result = await Sections.findAll({
-                    where: { isCervantes: true },
-                    attributes: ['id', 'name', 'isLcv', 'isCervantes', 'active']
-                });
-                return result;
-            }
+
+            const school = await Schools.findOne({ where: { id: school_id } });
+            const result = await Sections.findAll({
+                where: { [school.code]: true },
+                attributes: ['id', 'name', 'isLcv', 'isCervantes', 'isDiscovery', 'active']
+            });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -36,7 +31,7 @@ class SectionsService {
         try {
             const result = await Sections.findOne({
                 where: { id },
-                attributes: ['id', 'name', 'isLcv', 'isCervantes', 'active']
+                attributes: ['id', 'name', 'isLcv', 'isCervantes', 'isDiscovery', 'active']
             });
             return result;
         } catch (error) {

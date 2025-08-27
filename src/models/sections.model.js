@@ -8,7 +8,7 @@ const Section = db.define('section', {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-    },  
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -18,6 +18,10 @@ const Section = db.define('section', {
         defaultValue: false,
     },
     isCervantes: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    isDiscovery: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },

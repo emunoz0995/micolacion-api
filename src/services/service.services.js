@@ -1,10 +1,11 @@
+const Schools = require('../models/schools.model');
 const Services = require('../models/services.model');
 
 class ServicesService {
     static async getAll() {
         try {
             const result = await Services.findAll({
-                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra","isAditional",'active'],
+                attributes: ['id', 'code', 'name', 'price', 'isLcv', 'isCervantes', 'isDiscovery', "isExtra", "isAditional", 'active'],
                 order: [
                     ['name', 'ASC'],
                 ],
@@ -17,19 +18,12 @@ class ServicesService {
 
     static async getServicesBySchool(school_id) {
         try {
-            if (school_id === 1) {
-                const result = await Services.findAll({
-                    where: { isLcv: true },
-                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
-                });
-                return result;
-            } else if (school_id === 2) {
-                const result = await Services.findAll({
-                    where: { isCervantes: true },
-                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
-                });
-                return result;
-            }
+            const school = await Schools.findOne({ where: { id: school_id } });
+            const result = await Services.findAll({
+                where: { [school.code]: true },
+                attributes: ['id', 'code', 'name', 'price', 'isLcv', 'isCervantes', 'isDiscovery', "isExtra", 'active']
+            });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -37,19 +31,12 @@ class ServicesService {
 
     static async getAditionalServicesBySchool(school_id) {
         try {
-            if (school_id === 1) {
+            const school = await Schools.findOne({ where: { id: school_id } });
                 const result = await Services.findAll({
-                    where: { isLcv: true, isAditional: true },
-                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
+                     where: { [school.code]: true },
+                    attributes: ['id', 'code', 'name', 'price', 'isLcv', 'isCervantes', 'isDiscovery', "isExtra", 'active']
                 });
                 return result;
-            } else if (school_id === 2) {
-                const result = await Services.findAll({
-                    where: { isCervantes: true, isAditional: true},
-                    attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
-                });
-                return result;
-            }
         } catch (error) {
             throw error;
         }
@@ -59,7 +46,7 @@ class ServicesService {
         try {
             const result = await Services.findAll({
                 where: { isExtra: true },
-                attributes: ['id','code','name','price','isLcv', 'isCervantes',"isExtra",'active']
+                attributes: ['id', 'code', 'name', 'price', 'isLcv', 'isCervantes', 'isDiscovery', "isExtra", 'active']
             });
             return result;
         } catch (error) {
@@ -84,16 +71,16 @@ class ServicesService {
             return result;
         } catch (error) {
             throw error;
-         
+
         }
     }
 
     static async updateService(service, id) {
         try {
-            const result = await Services.update(service,id);
+            const result = await Services.update(service, id);
             return result;
         } catch (error) {
-            throw error;  
+            throw error;
         }
     }
 
@@ -107,4 +94,4 @@ class ServicesService {
     }
 }
 
-module.exports =  ServicesService;
+module.exports = ServicesService;

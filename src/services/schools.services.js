@@ -4,7 +4,7 @@ class SchoolService {
     static async getAll() {
         try {
             const result = await Schools.findAll({
-                attributes: ['id','name','active']
+                attributes: ['id', 'name', 'code', 'active']
             });
             return result;
         } catch (error) {
@@ -16,7 +16,7 @@ class SchoolService {
         try {
             const result = await Schools.findOne({
                 where: { id },
-                attributes: ['id','name','active']
+                attributes: ['id', 'name', 'code', 'active']
             });
             return result;
         } catch (error) {
@@ -30,16 +30,16 @@ class SchoolService {
             return result;
         } catch (error) {
             throw error;
-         
+
         }
     }
 
     static async updateSchool(school, id) {
         try {
-            const result = await Schools.update(school,id);
+            const result = await Schools.update(school, id);
             return result;
         } catch (error) {
-            throw error;  
+            throw error;
         }
     }
 
@@ -53,4 +53,4 @@ class SchoolService {
     }
 }
 
-module.exports =  SchoolService;
+module.exports = SchoolService;
