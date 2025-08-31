@@ -7,7 +7,7 @@ class AlmuerzosService {
     static async getLunchInicial(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 5, schoolId: school_id, statusLunch: false },
+                where: { sectionId: [5, 19], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -19,7 +19,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { isLunch: true}
+                    where: { isLunch: true }
                 }]
             });
             return result;
@@ -30,7 +30,7 @@ class AlmuerzosService {
     static async getLunchPrimaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId:2, schoolId: school_id, statusLunch: false },
+                where: { sectionId: 2, schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -42,7 +42,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { isLunch: true}
+                    where: { isLunch: true }
                 }]
             });
             return result;
@@ -53,7 +53,7 @@ class AlmuerzosService {
     static async getLunchSecundaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 6, schoolId: school_id, statusLunch: false },
+                where: { sectionId: [20, 6], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -65,7 +65,7 @@ class AlmuerzosService {
                     model: Services,
                     as: 'cliente_servicio',
                     attributes: ['name'],
-                    where: { isLunch: true}
+                    where: { isLunch: true }
                 }]
             });
             return result;
@@ -76,7 +76,7 @@ class AlmuerzosService {
     static async getLunchEventuales(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: [2,5,6,7], schoolId: school_id, statusLunch: false },
+                where: { sectionId: [2, 5, 6, 7, 19, 20], schoolId: school_id, statusLunch: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -90,15 +90,15 @@ class AlmuerzosService {
                     attributes: ['name'],
                     where: {
                         [Op.or]: [
-                          {
-                            [Op.and]: [
-                              { isLunch: false },
-                              { isBreakFast: true }
-                            ]
-                          },
-                          { noneService: true }
+                            {
+                                [Op.and]: [
+                                    { isLunch: false },
+                                    { isBreakFast: true }
+                                ]
+                            },
+                            { noneService: true }
                         ]
-                      }
+                    }
                 }]
             });
             return result;
@@ -110,7 +110,7 @@ class AlmuerzosService {
         try {
             const result = await Clients.findAll({
                 where: { statusLunch: true, schoolId: school_id },
-                attributes:['id','cedulaCliente','lastName','firstName','paidService','totalBreakfast'],
+                attributes: ['id', 'cedulaCliente', 'lastName', 'firstName', 'paidService', 'totalBreakfast'],
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -121,7 +121,7 @@ class AlmuerzosService {
                 }, {
                     model: Services,
                     as: 'cliente_servicio',
-                    attributes: ['name','isLunch','noneService' ],
+                    attributes: ['name', 'isLunch', 'noneService'],
                 }]
             });
             return result;

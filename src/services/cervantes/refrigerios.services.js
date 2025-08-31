@@ -8,7 +8,7 @@ class RefrigeriosService {
     static async getBreakFastInicial(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 5, schoolId: school_id, statusBreakfast: false },
+                where: { sectionId: [2, 19], schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -54,7 +54,7 @@ class RefrigeriosService {
     static async getBreakFastSecundaria(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: 6, schoolId: school_id, statusBreakfast: false },
+                where: { sectionId: [6, 20], schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
@@ -78,7 +78,7 @@ class RefrigeriosService {
     static async getBreakFastEventuales(school_id) {
         try {
             const result = await Clients.findAll({
-                where: { sectionId: [2, 5, 6, 7], schoolId: school_id, statusBreakfast: false },
+                where: { sectionId: [2, 5, 6, 7, 19, 20], schoolId: school_id, statusBreakfast: false },
                 order: [
                     ['lastName', 'ASC'],
                 ],
