@@ -11,37 +11,20 @@ class historyMiddleware {
                 const { cedulaCliente, firstName,
                     lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result.dataValues;
                 const breakfastConsumed = 1;
-                if (schoolId === 1) {
-                    await History.create({
-                        cedulaCliente,
-                        firstName, lastName,
-                        sectionId,
-                        representativeId,
-                        schoolId,
-                        principalService: serviceId,
-                        serviceId: 52,
-                        totalBreakfast,
-                        totalLunch,
-                        breakfastConsumed,
-                        paidService,
-                    }
-                    );
-                } else if (schoolId === 2) {
-                    await History.create({
-                        cedulaCliente,
-                        firstName, lastName,
-                        sectionId,
-                        representativeId,
-                        schoolId,
-                        principalService: serviceId,
-                        serviceId: 55,
-                        totalBreakfast,
-                        totalLunch,
-                        breakfastConsumed,
-                        paidService,
-                    }
-                    );
+                await History.create({
+                    cedulaCliente,
+                    firstName, lastName,
+                    sectionId,
+                    representativeId,
+                    schoolId,
+                    principalService: serviceId,
+                    serviceId: schoolId === 1 ? 52 : schoolId === 2 ? 55 : 98,
+                    totalBreakfast,
+                    totalLunch,
+                    breakfastConsumed,
+                    paidService,
                 }
+                );
             }
         } catch (error) {
             throw error;
@@ -56,37 +39,19 @@ class historyMiddleware {
                 const { cedulaCliente, firstName,
                     lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result.dataValues;
                 const breakfastConsumed = 1;
-                if (schoolId === 1) {
-                    await History.create({
-                        cedulaCliente,
-                        firstName, lastName,
-                        sectionId,
-                        representativeId,
-                        schoolId,
-                        principalService: serviceId,
-                        serviceId: 52,
-                        totalBreakfast,
-                        totalLunch,
-                        breakfastConsumed,
-                        paidService: 1,
-                    }
-                    );
-                } else if (schoolId === 2) {
-                    await History.create({
-                        cedulaCliente,
-                        firstName, lastName,
-                        sectionId,
-                        representativeId,
-                        schoolId,
-                        principalService: serviceId,
-                        serviceId: 55,
-                        totalBreakfast,
-                        totalLunch,
-                        breakfastConsumed,
-                        paidService: 1,
-                    }
-                    );
-                }
+                await History.create({
+                    cedulaCliente,
+                    firstName, lastName,
+                    sectionId,
+                    representativeId,
+                    schoolId,
+                    principalService: serviceId,
+                    serviceId: schoolId === 1 ? 52 : schoolId === 2 ? 55 : 98,
+                    totalBreakfast,
+                    totalLunch,
+                    breakfastConsumed,
+                    paidService: 1,
+                });
             }
         } catch (error) {
             throw error;
@@ -99,41 +64,24 @@ class historyMiddleware {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 const { cedulaCliente, firstName,
-                    lastName, sectionId, representativeId, serviceId,schoolId, totalBreakfast, totalLunch, paidService } = result;
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result;
                 const lunchesConsumed = 1;
-                if (schoolId === 1) {
-                    await History.create(
-                        {
-                            cedulaCliente,
-                            firstName, lastName,
-                            sectionId,
-                            representativeId,
-                            schoolId,
-                            principalService: serviceId,
-                            serviceId: 53,
-                            totalBreakfast,
-                            totalLunch,
-                            lunchesConsumed,
-                            paidService
-                        }
-                    );
-                } else if (schoolId === 2) {
-                    await History.create(
-                        {
-                            cedulaCliente,
-                            firstName, lastName,
-                            sectionId,
-                            representativeId,
-                            schoolId,
-                            principalService: serviceId,
-                            serviceId: 56,
-                            totalBreakfast,
-                            totalLunch,
-                            lunchesConsumed,
-                            paidService
-                        }
-                    );
-                }
+                await History.create(
+                    {
+                        cedulaCliente,
+                        firstName, lastName,
+                        sectionId,
+                        representativeId,
+                        schoolId,
+                        principalService: serviceId,
+                        serviceId: schoolId === 1 ? 53 : schoolId === 2 ? 56 : 99,
+                        serviceId: 53,
+                        totalBreakfast,
+                        totalLunch,
+                        lunchesConsumed,
+                        paidService
+                    }
+                );
             }
             next();
         } catch (error) {
@@ -147,41 +95,23 @@ class historyMiddleware {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
             if (result) {
                 const { cedulaCliente, firstName,
-                    lastName, sectionId, representativeId, serviceId,schoolId, totalBreakfast, totalLunch, paidService } = result;
+                    lastName, sectionId, representativeId, serviceId, schoolId, totalBreakfast, totalLunch, paidService } = result;
                 const lunchesConsumed = 1;
-                if (schoolId === 1) {
-                    await History.create(
-                        {
-                            cedulaCliente,
-                            firstName, lastName,
-                            sectionId,
-                            representativeId,
-                            schoolId,
-                            principalService: serviceId,
-                            serviceId: 53,
-                            totalBreakfast,
-                            totalLunch,
-                            lunchesConsumed,
-                            paidService:1 ,
-                        }
-                    );
-                } else if (schoolId === 2) {
-                    await History.create(
-                        {
-                            cedulaCliente,
-                            firstName, lastName,
-                            sectionId,
-                            representativeId,
-                            schoolId,
-                            principalService: serviceId,
-                            serviceId: 56,
-                            totalBreakfast,
-                            totalLunch,
-                            lunchesConsumed,
-                            paidService: 1, 
-                        }
-                    );
-                }
+                await History.create(
+                    {
+                        cedulaCliente,
+                        firstName, lastName,
+                        sectionId,
+                        representativeId,
+                        schoolId,
+                        principalService: serviceId,
+                        serviceId: schoolId === 1 ? 53 : schoolId === 2 ? 56 : 99,
+                        totalBreakfast,
+                        totalLunch,
+                        lunchesConsumed,
+                        paidService: 1,
+                    }
+                );
             }
             next();
         } catch (error) {
