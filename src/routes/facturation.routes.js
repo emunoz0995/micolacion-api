@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/services_receivable/:school_id', getServicesReceivable);
 router.get('/services_generateXML/:school_id', getServicesGenerateXML);
-router.get('/services_generateXMLByClient/:client_ci', getServicesGenerateXMlByClient);
+router.get('/:school_id/services_generateXMLByClient/:client_ci', getServicesGenerateXMlByClient);
 router.get('/client/:client_ci', getClient);
 router.post('/generateXML', asegurarConsecutivo, generateXML, xmlGenerado);
 router.delete('/deleteXMLClient/:client_ci', deleteXMLClient);

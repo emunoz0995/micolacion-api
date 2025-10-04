@@ -62,10 +62,10 @@ class FacturationService {
         }
     }
 
-    static async getServicesGenerateXMlByClient(ci) {
+    static async getServicesGenerateXMlByClient(ci, schoolId) {
         try {
             const result = await XML.findAll({
-                where: { representativeId: ci, isGenerateXML: false },
+                where: { representativeId: ci, isGenerateXML: false, schoolId },
                 include: [{
                     model: Section,
                     as: 'XML_seccion',
