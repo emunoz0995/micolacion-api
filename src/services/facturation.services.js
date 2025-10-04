@@ -44,24 +44,27 @@ class FacturationService {
     static async getServicesGenerateXML(school_id) {
         try {
             const result = await Representative.findAll({
+                where: { generateXML: true },
                 include: [{
                     model: Clients,
                     as: 'representante_cliente',
+                    required: true,
+                    where: { schoolId: school_id },
                     include: [{
                         model: Services,
                         as: 'cliente_servicio',
-                        attributes: ['name', 'price']
-                    }],
-                    where: { schoolId: school_id },
-                    required: true 
-                }],
-                where: { generateXML: true },
+                        attributes: ['name', 'price'],
+                    }]
+                }]
             });
+
             return result;
         } catch (error) {
+            console.error("Error en getServicesGenerateXML:", error);
             throw error;
         }
     }
+
 
     static async getServicesGenerateXMlByClient(ci, schoolId) {
         try {
