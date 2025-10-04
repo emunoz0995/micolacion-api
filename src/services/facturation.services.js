@@ -53,6 +53,7 @@ class FacturationService {
                         attributes: ['name', 'price']
                     }],
                     where: { schoolId: school_id },
+                    required: true 
                 }],
                 where: { generateXML: true },
             });
