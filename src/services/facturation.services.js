@@ -68,6 +68,7 @@ class FacturationService {
 
     static async getServicesGenerateXMlByClient(ci, schoolId) {
         try {
+            console.log(ci, schoolId)
             const result = await XML.findAll({
                 where: { representativeId: ci, isGenerateXML: false, schoolId },
                 include: [{
