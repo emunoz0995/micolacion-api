@@ -70,8 +70,6 @@ class RefrigeriosProcessService {
     static async decrementLunch(ci) {
         try {
             const result = await Clients.findOne({ where: { cedulaCliente: ci } });
-             console.log('result', result)
-            console.log('estoy aqui')
             if (result) {
                 result.decrement('totalLunch', { by: 1 });
                 result.increment('lunchesConsumed', { by: 1 });
